@@ -1,5 +1,5 @@
 Title: voronoi borders
-Date: 2014-02-06 10:00
+Date: 2014-06-09 13:50
 Tags: math, graphics, voronoi, shaders
 Category: graphics
 Slug: voronoi-borders
@@ -275,6 +275,8 @@ void main( void )
         gl_Position = vec4(aVertexPosition, 0.0, 1.0);
     }
 </script>
+
+comment on reddit [here](http://www.reddit.com/r/programming/comments/27pk14/shading_voronoi_cell_edges/).
 
 <script type="text/javascript" src="https://glmatrix.googlecode.com/files/glMatrix-0.9.5.min.js"></script>
 

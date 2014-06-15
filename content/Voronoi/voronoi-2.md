@@ -3,7 +3,7 @@ Date: 2014-06-15 3:00
 Tags: graphics, voronoi, shaders
 Category: graphics
 Slug: voronoi-2
-Summary: shading the edges of voronoi cells
+Summary: interactive voronoi
 
 
 <canvas id="voronoi" width="500" height="500" class="shader-demo update mouse"></canvas>

@@ -88,8 +88,9 @@ uniform vec2 mouseState;
 
 void main( void )
 {
-    vec2 p = position * canvasSize / 35.0;
-    vec2 m = mouseState / 35.0;
+    float size = 35.0;
+    vec2 p = position * canvasSize / size;
+    vec2 m = mouseState / size;
 
 	vec2 cell;
 	vec2 border;
@@ -107,7 +108,14 @@ void main( void )
     else {
         if(border.x > 0.1) col = vec3(0,0,0);
     }
-	gl_FragColor = vec4(col,1.0);
+
+    vec2 max = canvasSize/size - 2.0;
+    if(cell.x <= 1.0 || cell.y <= 1.0 || cell.x >= max.x || cell.y >= max.y) {
+
+       gl_FragColor = vec4(1.0,1.0,1.0,1.0);
+    } else {
+	   gl_FragColor = vec4(col,1.0);
+    }
 }
 
 </script>
@@ -120,7 +128,5 @@ void main( void )
         gl_Position = vec4(vertex, 0.0, 1.0);
     }
 </script>
-
-<script type="text/javascript" src="https://glmatrix.googlecode.com/files/glMatrix-0.9.5.min.js"></script>
 
 <script src="scripts/graphics.js"></script>

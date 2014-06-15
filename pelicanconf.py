@@ -26,3 +26,5 @@ DEFAULT_PAGINATION = 10
 RELATIVE_URLS = True
 
 PLUGINS = ['inlineimages', 'render_math']
+
+STATIC_PATHS = ['scripts']

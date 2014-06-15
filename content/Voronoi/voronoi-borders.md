@@ -66,11 +66,11 @@ void main( void )
 </pre>
 
 <script id="voronoi-vs" type="x-shader/x-vertex">
-    attribute vec2 aVertexPosition;
+    attribute vec2 vertex;
     varying vec2 position;
     void main(void) {
-    	position = aVertexPosition * 0.5 + 0.5;
-        gl_Position = vec4(aVertexPosition, 0.0, 1.0);
+    	position = vertex * 0.5 + 0.5;
+        gl_Position = vec4(vertex, 0.0, 1.0);
     }
 </script>
 
@@ -168,11 +168,11 @@ void main( void )
 </pre>
 
 <script id="voronoiBorders-vs" type="x-shader/x-vertex">
-    attribute vec2 aVertexPosition;
+    attribute vec2 vertex;
     varying vec2 position;
     void main(void) {
-    	position = aVertexPosition * 0.5 + 0.5;
-        gl_Position = vec4(aVertexPosition, 0.0, 1.0);
+        position = vertex * 0.5 + 0.5;
+        gl_Position = vec4(vertex, 0.0, 1.0);
     }
 </script>
 
@@ -268,16 +268,14 @@ void main( void )
 </pre>
 
 <script id="voronoiFancyBorders-vs" type="x-shader/x-vertex">
-    attribute vec2 aVertexPosition;
+    attribute vec2 vertex;
     varying vec2 position;
     void main(void) {
-    	position = aVertexPosition * 0.5 + 0.5;
-        gl_Position = vec4(aVertexPosition, 0.0, 1.0);
+        position = vertex * 0.5 + 0.5;
+        gl_Position = vec4(vertex, 0.0, 1.0);
     }
 </script>
 
 comment on reddit [here](http://www.reddit.com/r/programming/comments/27pk14/shading_voronoi_cell_edges/).
 
-<script type="text/javascript" src="https://glmatrix.googlecode.com/files/glMatrix-0.9.5.min.js"></script>
-
-<script src="{dirname}voronoi-borders.js"></script>
+<script src="scripts/graphics.js"></script>

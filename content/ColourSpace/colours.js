@@ -30,11 +30,6 @@ function dot(x, y) {
 }
 
 function XYZToRGB(c) {
-    //var rt = [0.41847,-0.15866,-0.082835];
-    //var gt = [-0.091169, 0.25243, 0.015708];
-    //var bt = [0.00092090,-0.0025498, 0.17860];
-
-
     var rt = [3.2406, -1.5372, -0.4986];
     var gt = [-0.9689, 1.8758, 0.0415];
     var bt = [0.0557, -0.2040, 1.0570];
@@ -103,25 +98,50 @@ function HCLToHex(c) {
 function HCLToLuv(c) {
     return LUVToYuv(c)
 }
-
+function YuvToRGB(c) {
+    return XYZToRGB(YuvToXYZ(c));
+}
+function LUVToRGB(c) {
+    return YuvToRGB(LUVToYuv(c));
+}
+function HCLToRGB(c) {
+    return LUVToRGB(HCLToLUV(c));
+}
+function HCLToYuv(c) {
+    return LUVToYuv(HCLToLUV(c));
+}
+function HCLToXYZ(c) {
+    return YuvToXYZ(HCLToYuv(c));
+}
 var startTime = new Date().getTime();
+
+var primaryColour = [0,50,50];
+var secondaryColour0 = [0,50,50];
+var secondaryColour1 = [0,50,50];
 
 function changeColor() {
     var time = new Date().getTime() - startTime;
     time /= 1000;
-    var h = time * 6.28 * 0.3;
-    var HCL = [h,50,50];
+    var h = time * 6.28 * 0.2;
+    primaryColour = [h, 50, 50];
     var split = 0.2;
-    document.body.style["background-color"] = HCLToHex(HCL);
+    var pHex = HCLToHex(primaryColour);
+    document.body.style["background-color"] = pHex;
 
-    HCL = [0, 25, 50];
-    HCL[0] = h + 3.14 * (1-split);
+    var h0 = h + 3.14 * (1-split);
+    secondaryColour0 = [h0, 25, 75];
     var menu = document.getElementById("menu");
-    menu.style.border = "7px solid " + HCLToHex(HCL);
+    menu.style.border = "7px solid " + HCLToHex(secondaryColour0);
 
-    HCL[0] = h + 3.14 * (1+split);
+    var h1 = h + 3.14 * (1+split);
+    secondaryColour1 = [h1, 25, 75];
     var content = document.getElementById("content");
-    content.style.border = "7px solid " + HCLToHex(HCL);
+    content.style.border = "7px solid " + HCLToHex(secondaryColour1);
+
+    var bg = document.getElementById("colours").parentNode;
+    for(;bg;bg=bg.parentNode) {
+        if(bg.style) bg.style["background-color"] = pHex;
+    }
 }
 
 setInterval(changeColor, 1000/30);  

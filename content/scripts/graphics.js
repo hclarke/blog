@@ -203,6 +203,7 @@ function drawMesh(gl, material, mesh) {
         if(data == null) data = material[name];
         if(data == null) data = gl[name];
         if(data == null) data = gl.canvas[name];
+        if(data == null) data = this[name];
         if(data == null) continue;
         assignUniform(gl, shader, uniform, data);
     }

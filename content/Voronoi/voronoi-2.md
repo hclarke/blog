@@ -1,7 +1,7 @@
 Title: voronoi 2
 Date: 2014-06-15 3:00
 Tags: graphics, voronoi, shaders
-Category: graphics
+Category: demos
 Slug: voronoi-2
 Summary: interactive voronoi
 

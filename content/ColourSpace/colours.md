@@ -1,7 +1,7 @@
 Title: colours
 Date: 2014-06-17 4:00
 Tags: graphics, colour
-Category: graphics
+Category: demos
 Slug: colours
 Summary: colours
 

@@ -1,7 +1,7 @@
 Title: voronoi borders
 Date: 2014-06-09 13:50
 Tags: math, graphics, voronoi, shaders
-Category: graphics
+Category: how it's made
 Slug: voronoi-borders
 Summary: shading the edges of voronoi cells
 

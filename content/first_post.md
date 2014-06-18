@@ -1,7 +1,7 @@
 Title: first post
 Date: 2014-06-09 13:30
 Tags: blag
-Category: blag
+Category: metablag
 Slug: first-post
 Summary: first post
 

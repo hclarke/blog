@@ -2,8 +2,10 @@ function initGL(canvas) {
    var gl;
    try {
        gl = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
-       gl.clearColor(0.0, 1.0, 0.0, 1.0);
+       gl.clearColor(0.0, 0.0, 0.0, 0.0);
        gl.enable(gl.DEPTH_TEST);
+       gl.enable(gl.BLEND);
+       gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
        var floatTextures = gl.getExtension('OES_texture_float');
        if (!floatTextures) {
            alert('no floating point texture support');
@@ -16,22 +18,37 @@ function initGL(canvas) {
     canvas.gl = gl;
     gl.canvas = canvas;
 }
-function getShaderText(id) {
-    var shaderScript = document.getElementById(id);
-    if (!shaderScript) {
+function getText(id, done, preludeClass) {
+    var element = document.getElementById(id);
+    if (!element) {
         alert("shader missing")
         return null;
     }
+    return getTextFromElement(element, done);
+}
+function getTextFromElement(element, done, preludeClass) {
+    if(done[element]) return "";
+    done[element] = true;
     var str = "";
-    for(var k = shaderScript.firstChild;k;k=k.nextSibling) {
+    for(var k = element.firstChild;k;k=k.nextSibling) {
         if (k.nodeType == 3) {
             str += k.textContent;
         }
     }
-    return str;
+
+    if(!done["__prelude__"]) {
+        done["__prelude__"] = true;
+        var elements = document.getElementsByClassName(preludeClass);
+        for(var i = 0; i < elements.length; ++i) {
+            str = getTextFromElement(preludeElements[i]) + "\n" + str;
+        }
+    }
+    return str.replace(/#include (.*)/, function(_, n) {
+        return getText(n,done) ;
+    });
 }
 function getShader(gl, id) {
-    var str = getShaderText(id);
+    var str = getText(id, {}, "slinc");
     var shader;
     if (id[id.length-2] == 'f') {
         shader = gl.createShader(gl.FRAGMENT_SHADER);
@@ -274,16 +291,19 @@ function InitShaderDemos() {
     }
 }
 var lastDate = new Date().getTime();
+var time = 0;
 function UpdateAll() {
     var date = new Date().getTime();
-    var deltaTime = date-lastDate;
+    var deltaTime = (date-lastDate) / 1000;
     var updateds = document.getElementsByClassName("update");
+    time += deltaTime;
     for(var i = 0; i < updateds.length; ++i) {
         var updated = updateds[i];
-        if(updated.update != null && updated.paused != true) updated.update(deltaTime / 1000.0);
+        if(updated.update != null && updated.paused != true) updated.update(deltaTime);
     }
     lastDate = date;
 }
+
 InitShaderDemos();
 function mouseTrack() {
     var date = new Date().getTime();
@@ -291,13 +311,21 @@ function mouseTrack() {
     var mouseCheckers = document.getElementsByClassName("mouse");
     for(var i = 0; i < mouseCheckers.length; ++i) {
         var mouseChecker = mouseCheckers[i];
-        mouseChecker.mouseState = [0,0];
+        mouseChecker.mouseState = [0,0,0];
         mouseChecker.onmousemove = function(e) {
             var box = this.getBoundingClientRect();
             this.mouseState[0] = e.clientX - box.left;
             this.mouseState[1] = -(e.clientY - box.bottom);
         };
-        mouseChecker.on
+        mouseChecker.onmousedown = function(e) {
+            this.mouseState[2] = 1;
+        };
+        mouseChecker.onmouseup = function(e) {
+            this.mouseState[2] = 0;
+        };
+        mouseChecker.onmouseout = function(e) {
+            this.mouseState[2] = 0;
+        }
     }
     lastDate = date;
 }

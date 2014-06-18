@@ -13,9 +13,9 @@ precision mediump float;
 uniform sampler2D randTex;
 uniform float time;
 
-vec4 rand( vec2 p ) {
+vec4 rand( vec2 p, float t ) {
     vec4 r = texture2D( randTex, p/256.0, -100.0 );
-    return sin(r*(7.0+time)) * 0.5 + 0.5;
+    return sin(r*(7.0+t)) * 0.5 + 0.5;
 }
 
 void voronoi( in vec2 x, out vec2 cell)
@@ -32,7 +32,7 @@ void voronoi( in vec2 x, out vec2 cell)
     {
         vec2 relativeCell = vec2(i,j);
         vec2 currentCell = relativeCell + xcell;
-		vec2 offset = rand(currentCell).xy;
+		vec2 offset = rand(currentCell, time).xy;
         vec2 relativePoint = relativeCell + offset - xoffset;
         float sqrDist = dot(relativePoint,relativePoint);
 
@@ -50,7 +50,7 @@ void voronoiBorder(in vec2 x, in vec2 cell, out vec2 uv) {
     vec2 xcell = floor(x);
     vec2 xoffset = fract(x);
     vec2 bestRelativeCell = cell - xcell;
-    vec2 bestOffset = rand(cell).xy;
+    vec2 bestOffset = rand(cell, time).xy;
 
     vec2 bestRelativePoint = bestRelativeCell + bestOffset - xoffset;
 
@@ -65,7 +65,7 @@ void voronoiBorder(in vec2 x, in vec2 cell, out vec2 uv) {
 
         vec2 relativeCell = bestRelativeCell + vec2(i,j);
         vec2 currentCell = relativeCell + xcell;
-		vec2 offset = rand(currentCell).xy;
+		vec2 offset = rand(currentCell, time).xy;
         vec2 relativePoint = relativeCell + offset - xoffset;
 
         vec2 midpoint = (relativePoint + bestRelativePoint) * 0.5;
@@ -84,13 +84,13 @@ void voronoiBorder(in vec2 x, in vec2 cell, out vec2 uv) {
 
 varying vec2 position;
 uniform vec2 canvasSize;
-uniform vec2 mouseState;
+uniform vec3 mouseState;
 
 void main( void )
 {
     float size = 35.0;
     vec2 p = position * canvasSize / size;
-    vec2 m = mouseState / size;
+    vec2 m = mouseState.xy / size;
 
 	vec2 cell;
 	vec2 border;
@@ -100,22 +100,23 @@ void main( void )
     voronoi(m, mcell);
 
 	
-	vec3 col = vec3(1,1,1);
+	vec4 col = vec4(0.0,0.0,0.0,1.0);
+
     if(mcell == cell) {
+        if(mouseState.z == 1.0) col.xyz = rand(cell, 0.0).xyz;
         float edge = cos(border.y*20.0 + time * 10.0);
-        if(edge > 0.0 && border.x < 0.1) col = vec3(0,0,0);
+        if(edge > 0.0 && border.x < 0.1) col.w = 0.0;
     }
     else {
-        if(border.x > 0.1) col = vec3(0,0,0);
+        if(border.x < 0.1) col.w = 0.0;
     }
 
     vec2 max = canvasSize/size - 2.0;
     if(cell.x <= 1.0 || cell.y <= 1.0 || cell.x >= max.x || cell.y >= max.y) {
-
-       gl_FragColor = vec4(1.0,1.0,1.0,1.0);
-    } else {
-	   gl_FragColor = vec4(col,1.0);
-    }
+       col.w = 0.0;
+   }
+    
+       gl_FragColor = col;
 }
 
 </script>

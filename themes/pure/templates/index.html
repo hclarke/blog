@@ -1,20 +1,13 @@
 {% extends "base.html" %}
 {% block content %}
 
-{% block content_title %}
-<h2>all articles</h2>
-{% endblock %}
-
-<ol id="post-list">
+<ul id="post-list">
 {% for article in articles_page.object_list %}
         <li><article class="hentry">
                 <header> <h2 class="entry-title"><a href="{{ SITEURL }}/{{ article.url }}" rel="bookmark" title="Permalink to {{ article.title|striptags }}">{{ article.title }}</a></h2> </header>
-                <footer class="post-info">
-                    <abbr class="published" title="{{ article.date.isoformat() }}"> {{ article.locale_date }} </abbr>
-                </footer><!-- /.post-info -->
                 <div class="entry-content"> {{ article.summary }} </div><!-- /.entry-content -->
         </article></li>
 {% endfor %}
-</ol><!-- /#posts-list -->
+</ul><!-- /#posts-list -->
 {% include 'pagination.html' %}
 {% endblock content %}

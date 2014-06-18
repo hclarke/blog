@@ -126,7 +126,7 @@ function changeColor() {
     primaryColour = [h, 50, 50];
     var split = 0.2;
     var pHex = HCLToHex(primaryColour);
-    document.body.style["background-color"] = pHex;
+    document.body.style["backgroundColor"] = pHex;
 
     var h0 = h + 3.14 * (1-split);
     secondaryColour0 = [h0, 25, 75];
@@ -140,7 +140,13 @@ function changeColor() {
 
     var bg = document.getElementById("colours").parentNode;
     for(;bg;bg=bg.parentNode) {
-        if(bg.style) bg.style["background-color"] = pHex;
+        if(bg.style) bg.style["backgroundColor"] = pHex;
+    }
+
+
+    var bg = document.getElementById("colours").parentNode;
+    for(;bg;bg=bg.parentNode) {
+        if(bg.style) bg.style["backgroundColor"] = pHex;
     }
 }
 

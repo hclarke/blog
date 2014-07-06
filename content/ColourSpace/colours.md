@@ -160,5 +160,43 @@ void main() {
 </script>
 
 
-<script src="{dirname}colours.js"></script>
-<script src="scripts/graphics.js"></script>
+<script src="scripts/colours.js" type="text/javascript"></script>
+<script src="scripts/graphics.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+var primaryColour = [0,50,50];
+var secondaryColour0 = [0,50,50];
+var secondaryColour1 = [0,50,50];
+
+function changeColor() {
+    var time = new Date().getTime() - startTime;
+    time /= 1000;
+    var h = time * 6.28 * 0.2;
+    primaryColour = [h, 50, 50];
+    var split = 0.2;
+    var pHex = HCLToHex(primaryColour);
+    document.body.style["backgroundColor"] = pHex;
+
+    var h0 = h + 3.14 * (1-split);
+    secondaryColour0 = [h0, 25, 75];
+    var menu = document.getElementById("menu");
+    menu.style.border = "7px solid " + HCLToHex(secondaryColour0);
+
+    var h1 = h + 3.14 * (1+split);
+    secondaryColour1 = [h1, 25, 75];
+    var content = document.getElementById("content");
+    content.style.border = "7px solid " + HCLToHex(secondaryColour1);
+
+    var bg = document.getElementById("colours").parentNode;
+    for(;bg;bg=bg.parentNode) {
+        if(bg.style) bg.style["backgroundColor"] = pHex;
+    }
+
+
+    var bg = document.getElementById("colours").parentNode;
+    for(;bg;bg=bg.parentNode) {
+        if(bg.style) bg.style["backgroundColor"] = pHex;
+    }
+}
+setInterval(changeColor, 1000/30);  
+</script>

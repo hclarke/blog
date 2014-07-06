@@ -6,6 +6,9 @@ function initGL(canvas) {
        gl.enable(gl.DEPTH_TEST);
        gl.enable(gl.BLEND);
        gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+       gl.projection = identity();
+       gl.view = identity();
+       gl.model = identity();
        var floatTextures = gl.getExtension('OES_texture_float');
        if (!floatTextures) {
            alert('no floating point texture support');
@@ -24,11 +27,13 @@ function getText(id, done, preludeClass) {
         alert("shader missing")
         return null;
     }
-    return getTextFromElement(element, done);
+    return getTextFromElement(element, done, preludeClass);
 }
 function getTextFromElement(element, done, preludeClass) {
-    if(done[element]) return "";
-    done[element] = true;
+    if(done[element.id] == true) {
+        return "";
+    }
+    done[element.id] = true;
     var str = "";
     for(var k = element.firstChild;k;k=k.nextSibling) {
         if (k.nodeType == 3) {
@@ -40,7 +45,8 @@ function getTextFromElement(element, done, preludeClass) {
         done["__prelude__"] = true;
         var elements = document.getElementsByClassName(preludeClass);
         for(var i = 0; i < elements.length; ++i) {
-            str = getTextFromElement(preludeElements[i]) + "\n" + str;
+            var preludeStr = getTextFromElement(elements[i], done, preludeClass);
+            str = preludeStr + "\n" + str;
         }
     }
     return str.replace(/#include (.*)/, function(_, n) {
@@ -83,33 +89,8 @@ function assignUniform(gl, program, uniform, data) {
         case gl.FLOAT_VEC4:
             gl.uniform4f(id, data[0], data[1], data[2], data[3]);
             break;
-        case gl.INT:
-            var d = data;
-            if(d[0] != null) d = d[0];
-            gl.uniform1i(id, d);
-            break;
-        case gl.INT_VEC2:
-            gl.uniform2i(id, data[0], data[1]);
-            break;
-        case gl.INT_VEC3:
-            gl.uniform3i(id, data[0], data[1], data[2]);
-            break;
-        case gl.INT_VEC4:
-            gl.uniform4i(id, data[0], data[1], data[2], data[3]);
-            break;
-        case gl.FLOAT_MAT2:
-            gl.uniformMatrix2fv(id, [
-                data[0], data[2], 
-                data[1], data[3]]);
-            break;
-        case gl.FLOAT_MAT3:
-            gl.uniformMatrix3fv(id, [
-                data[0], data[3], data[6],
-                data[1], data[4], data[7], 
-                data[2], data[5], data[8]]);
-            break;
         case gl.FLOAT_MAT4:
-            gl.uniformMatrix3fv(id, [
+            gl.uniformMatrix4fv(id, false, [
                 data[0], data[4], data[8], data[12],
                 data[1], data[5], data[9], data[13],
                 data[2], data[6], data[10], data[14],
@@ -255,6 +236,52 @@ function drawMesh(gl, material, mesh) {
         gl.disableVertexAttribArray(attrib.id);
     }
 }
+
+//matrix
+function vmul(a, b) {
+    var l = Math.min(a.length, b.length);
+    var r = new Array(l);
+    for(var i = 0; i < l; ++i)  {r[i] = a[i]*b[i]; }
+    return r;
+}
+function vadd(a, b) {
+    var l = Math.min(a.length, b.length);
+    var r = new Array(l);
+    for(var i = 0; i < l; ++i)  {r[i] = a[i]+b[i]; }
+    return r;
+}
+function mmul(a, b) {
+    var r = new Array(16);
+    for(var row = 0; row < 4; ++row) {
+        for(var col = 0; col < 4; ++col) {
+            for(var i = 0; i < 4; ++i) {
+                r[col*4 + row] += a[row + i*4] * b[col*4+i]
+            }
+        }
+    }
+    return r;
+}
+function identity() {
+    return [
+    1.0, 0.0, 0.0, 0.0,
+    0.0, 1.0, 0.0, 0.0,
+    0.0, 0.0, 1.0, 0.0,
+    0.0, 0.0, 0.0, 1.0];
+}
+function translation(t) {
+    return [
+    1.0, 0.0, 0.0, t[0],
+    0.0, 1.0, 0.0, t[1],
+    0.0, 0.0, 1.0, t[2],
+    0.0, 0.0, 0.0, 1.0];
+}
+function scale(s) {return [
+    s  , 0.0, 0.0, 0.0,
+    0.0, s  , 0.0, 0.0,
+    0.0, 0.0, s  , 0.0,
+    0.0, 0.0, 0.0, 1.0];
+}
+
 function InitShaderDemos() {
     var shaderDemos = document.getElementsByClassName("shader-demo");
     for(i = 0; i < shaderDemos.length; ++i) {

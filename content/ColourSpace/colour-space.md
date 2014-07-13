@@ -9,19 +9,14 @@ Summary: colour picker
 
 
 <div>
-<canvas id="LC-canvas" width="500" height="600" class="shader-demo update mouse"></canvas>
+<canvas id="H-canvas" width="700" height="700" class="shader-demo update mouse"></canvas>
 <br>
-<canvas id="H-canvas" width="500" height="100" class="shader-demo update mouse"></canvas>
+<p style="width:700px; height:40px; display:inline-block;" class="primary">primary</p>
 <br>
-<canvas id="S-canvas" width="500" height="100" class="shader-demo update mouse"></canvas>
-</div>
-
-
-<div>
-<p style="width:500px; height:40px; display:inline-block;" class="primary">primary</p>
+<p style="width:350px; height:40px; display:inline-block;" class="secondary0">secondary0</p>
+<p style="width:350px; height:40px; display:inline-block;" class="secondary1">secondary1</p>
 <br>
-<p style="width:250px; height:40px; display:inline-block;" class="secondary0">secondary0</p>
-<p style="width:250px; height:40px; display:inline-block;" class="secondary1">secondary1</p>
+<canvas id="S-canvas" width="700" height="60" class="shader-demo update mouse"></canvas>
 </div>
 </div>
 
@@ -154,41 +149,6 @@ vec3 HCLTosRGB(vec3 c) {
 
 </script>
 
-<script id="LC-canvas-fs" type="x-shader/x-fragment">
-
-
-
-varying vec2 position;
-uniform vec2 canvasSize;
-uniform vec3 mouseState;
-uniform vec3 hclColour;
-
-void main() {
-    vec3 hcl = vec3(hclColour.x, position.y * 200.0, position.x * 100.0);
-    vec3 c = HCLTosRGB(hcl);
-
-    vec2 diff = (hcl.yz - hclColour.yz) * vec2(1,2);
-    float d =  dot(diff, diff);
-    if(d > 1.0 && d < 2.0) {
-         gl_FragColor = vec4(0,0,0,1);
-    }
-    else if(hcl.y > maxChroma(hcl.xz))  {
-        gl_FragColor = vec4(c,0.0);
-    }
-    else {
-        gl_FragColor = vec4(c, 1.0);
-    }
-}
-</script>
-<script id="LC-canvas-vs" type="x-shader/x-vertex">
-    attribute vec2 vertex;
-    varying vec2 position;
-    void main(void) {
-        position = vertex * 0.5 + 0.5;
-        gl_Position = vec4(vertex, 0.0, 1.0);
-    }
-</script>
-
 <script id="H-canvas-fs" type="x-shader/x-fragment">
 
 
@@ -199,13 +159,52 @@ uniform vec3 mouseState;
 uniform vec3 hclColour;
 
 void main() {
-    float h = position.x * 3.14*2.0;
-    float l = hclColour.z;
-    float c = hclColour.y;
-    vec3 col = HCLTosRGB(vec3(h,c,l));
-    float d = abs(h-hclColour.x);
-    if((position.y < 0.4 || position.y > 0.6) && d < 0.03) col = vec3(0,0,0);
-    gl_FragColor = vec4(col,1.0);
+    vec2 p = (position-0.5)*2.0;
+    float r = length(p);
+    float ringWidth = 0.1;
+    if(r > 1.0-ringWidth && r < 1.0) {
+
+        float l = hclColour.z;
+        vec2 dir = position*200.0 - 100.0;
+        float c = hclColour.y;
+        float h = atan(dir.y, dir.x);
+        if(h < 0.0) h += 3.14159*2.0;
+        float h1 = hclColour.x;
+        if(h1 < 0.0) h1 += 3.14159*2.0;
+        float d = abs(h-h1);
+        if(d > 3.14159) d = 3.14159*2.0-d;
+        
+        float rr = (1.0-r)/ringWidth;
+
+
+        vec3 col = HCLTosRGB(vec3(h,c,l));
+
+        if((rr < 0.3 || rr > 0.7) && d < 0.01) col = vec3(0,0,0);
+        gl_FragColor = vec4(col,1.0);
+        return;
+    }
+    vec2 bp = p*sqrt(2.0)*(1.0+ringWidth);
+    bp = bp * 0.5 + 0.5;
+    if(bp.x > 0.0 && bp.x < 1.0 && bp.y > 0.0 && bp.y < 1.0) {
+        vec3 hcl = vec3(hclColour.x, bp.y * 200.0, bp.x * 100.0);
+        vec3 c = HCLTosRGB(hcl);
+
+        vec2 diff = (hcl.yz - hclColour.yz) * vec2(1,2);
+        float d =  dot(diff, diff);
+        if(d > 1.0 && d < 2.0) {
+             gl_FragColor = vec4(0,0,0,1);
+        }
+        else if(hcl.y > maxChroma(hcl.xz))  {
+            gl_FragColor = vec4(c,0.0);
+        }
+        else {
+            gl_FragColor = vec4(c, 1.0);
+        }
+        return;
+    }
+
+    gl_FragColor = vec4(0.0,0.0,0.0,0.0);
+
 }
 </script>
 <script id="H-canvas-vs" type="x-shader/x-vertex">
@@ -291,23 +290,42 @@ function rebuildColour() {
 }
 rebuildColour();
 
-var LCCanvas = document.getElementById("LC-canvas");
-function updateLC() {
-    var canvas = LCCanvas;
-    var mstate = [canvas.mouseState[0] / canvas.gl.canvasSize[0], canvas.mouseState[1] / canvas.gl.canvasSize[1], canvas.mouseState[2]];
-    if(mstate[2] == 0.0) return;
-    hclColour[1] = mstate[1] * 200;
-    hclColour[2] = mstate[0] * 100;
-    rebuildColour();
-}
-setInterval(updateLC, 1000/30);
-
 var HCanvas = document.getElementById("H-canvas");
+var wasDown = false;
+var clickSpot = null;
 function updateH() {
     var canvas = HCanvas;
     var mstate = [canvas.mouseState[0] / canvas.gl.canvasSize[0], canvas.mouseState[1] / canvas.gl.canvasSize[1], canvas.mouseState[2]];
+    
+    if(!wasDown) {
+        clickSpot = [mstate[0],mstate[1],mstate[2]];
+    }
+    wasDown = mstate[2] == 1.0;
     if(mstate[2] == 0.0) return;
-    hclColour[0] = mstate[0] * 3.14159*2.0;
+
+    var p = [mstate[0] * 2.0 - 1.0, mstate[1] * 2.0 - 1.0];
+    var r = Math.sqrt(dot(p,p));
+
+    var sp = [clickSpot[0] * 2.0 -1.0, clickSpot[1] * 2.0 - 1.0];
+    var sr = Math.sqrt(dot(sp,sp));
+
+    var ringWidth = 0.1;
+    if(sr > 1.0-ringWidth && sr < 1.0) {
+        var a = Math.atan2(p[1], p[0]);
+        hclColour[0] = a;
+    }
+
+    var bp = [
+        p[0]*Math.sqrt(2.0)*(1.0+ringWidth) *0.5 + 0.5,
+        p[1]*Math.sqrt(2.0)*(1.0+ringWidth) *0.5 + 0.5];
+    var sbp = [
+        sp[0]*Math.sqrt(2.0)*(1.0+ringWidth) *0.5 + 0.5,
+        sp[1]*Math.sqrt(2.0)*(1.0+ringWidth) *0.5 + 0.5];
+
+    if(sbp[0] > 0.0 && sbp[0] < 1.0 && sbp[1] > 0.0 && sbp[1] < 1.0) {
+        hclColour[1] = bp[1] * 200;
+        hclColour[2] = bp[0] * 100;
+    }
     rebuildColour();
 }
 setInterval(updateH, 1000/30);

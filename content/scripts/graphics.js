@@ -125,6 +125,7 @@ function initShaders(gl, id) {
     var shaderProgram;
     var fragmentShader = getShader(gl, id+"-fs");
     var vertexShader = getShader(gl, id+"-vs");
+    console.log(id);
     shaderProgram = gl.createProgram();
     gl.attachShader(shaderProgram, vertexShader);
     gl.attachShader(shaderProgram, fragmentShader);
@@ -176,6 +177,7 @@ function initRandTexture(gl) {
 }
 function drawMesh(gl, material, mesh) {
     var shader = material.shader;
+    if(shader == null) return;
     gl.useProgram(shader);
     for(var i = 0; i < shader.uniforms.length; ++i) {
         var uniform = shader.uniforms[i];

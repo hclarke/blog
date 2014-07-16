@@ -22,7 +22,7 @@ Summary: colour picker
 
 #colour space
 
-this is using the HCL colour space, which is a hue/chroma transformation of [CIELUV](http://en.wikipedia.org/wiki/CIELUV), which is a perceprually uniform colour space (meaning, distance between colours in the colour space line up with human perception of how different the colours are).
+this is using the HCL colour space, which is a hue/chroma transformation of [CIELUV](http://en.wikipedia.org/wiki/CIELUV), which is a perceptually uniform colour space (meaning, distance between colours in the colour space line up with human perception of how different the colours are).
 
 it's restricted to the colours that are in sRGB by treating hue and lightness as fixed, and clamping the chroma to be in range. see [here](http://cscheid.net/2012/02/16/hcl-color-space-blues.html) for an explanation of why it needs to be clamped.
 
@@ -35,6 +35,8 @@ secondary colours are chosen by picking two colours of the same chroma and light
 i'm taking [this](http://xkcd.com/color/rgb.txt) big list of colours from a xkcd survey, transforming them to CIELUV, and then picking the nearest one to the selected colour.
 
 there's some fun ones in there, like "ugly yellow" and "poop brown".
+
+comment on reddit [here](http://www.reddit.com/r/hclarke/comments/2arxqr/colour_picker/).
 
 <script id="frag-inc" class="slinc" type="x-shader/x-fragment">
 precision mediump float;
@@ -217,6 +219,39 @@ void main() {
 </script>
 
 <script id="S-canvas-fs" type="x-shader/x-fragment">
+
+
+
+varying vec2 position;
+uniform vec2 canvasSize;
+uniform vec3 mouseState;
+uniform vec3 hclColour;
+uniform float split;
+
+void main() {
+    float s = sign(position.y - 0.5);
+    float h = hclColour.x + 3.14159 * (1.0 + s * position.x);
+    float l = hclColour.z;
+    float c = hclColour.y;
+    vec3 col = HCLTosRGB(vec3(h,c,l));
+
+
+    float d = abs(split-position.x);
+    if((position.y < 0.4 || position.y > 0.6) && d < 0.005) col = vec3(0,0,0);
+    gl_FragColor = vec4(col,1.0);
+}
+</script>
+<script id="S-canvas-vs" type="x-shader/x-vertex">
+    attribute vec2 vertex;
+    varying vec2 position;
+    void main(void) {
+        position = vertex * 0.5 + 0.5;
+        gl_Position = vec4(vertex, 0.0, 1.0);
+    }
+</script>
+
+
+<script id="L-canvas-fs" type="x-shader/x-fragment">
 
 
 

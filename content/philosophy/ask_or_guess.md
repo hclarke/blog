@@ -26,5 +26,3 @@ that last case ties into [this](http://celandine13.livejournal.com/72711.html) p
 #led zeppelin
 
 [i had to](http://www.youtube.com/watch?v=qoqQnR8NOVI)
-
-comment on reddit [here](http://www.reddit.com/r/hclarke/comments/2auwej/communication_breakdown/)

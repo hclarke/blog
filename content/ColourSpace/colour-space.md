@@ -36,7 +36,6 @@ i'm taking [this](http://xkcd.com/color/rgb.txt) big list of colours from a xkcd
 
 there's some fun ones in there, like "ugly yellow" and "poop brown".
 
-comment on reddit [here](http://www.reddit.com/r/hclarke/comments/2arxqr/colour_picker/).
 
 <script id="frag-inc" class="slinc" type="x-shader/x-fragment">
 precision mediump float;

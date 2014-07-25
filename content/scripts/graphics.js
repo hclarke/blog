@@ -1,11 +1,8 @@
 function initGL(canvas) {    
    var gl;
    try {
-       gl = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
+       gl =  canvas.getContext("experimental-webgl") || canvas.getContext("webgl");
        gl.clearColor(0.0, 0.0, 0.0, 0.0);
-       gl.enable(gl.DEPTH_TEST);
-       gl.enable(gl.BLEND);
-       gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
        gl.projection = identity();
        gl.view = identity();
        gl.model = identity();
@@ -13,6 +10,11 @@ function initGL(canvas) {
        if (!floatTextures) {
            alert('no floating point texture support');
        }
+       var derivatives = gl.getExtension('OES_standard_derivatives');
+       if(!derivatives) {
+            alert('ddx/ddy not available in shaders');
+       }
+       console.log(derivatives);
    } catch (e) {
    }
    if (!gl) {
@@ -121,6 +123,33 @@ function assignUniform(gl, program, uniform, data) {
             break;
     }
 }
+
+function createRenderTexture(gl, w, h) {
+    var fb = gl.createFramebuffer();
+    gl.bindFramebuffer(gl.FRAMEBUFFER, fb);
+    fb.width = w;
+    fb.height = h;
+    var rt = gl.createTexture();    
+    gl.bindTexture(gl.TEXTURE_2D, rt);            
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
+    var data = new Array(w*h*4);
+    for(var i = 0; i < w*h*4; ++i) data[i] = 0;
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, fb.width, fb.height, 0, gl.RGBA, gl.FLOAT, new Float32Array(data));
+
+    var db = gl.createRenderbuffer();
+    gl.bindRenderbuffer(gl.RENDERBUFFER, db);
+    gl.renderbufferStorage(gl.RENDERBUFFER, gl.DEPTH_COMPONENT16, fb.width, fb.height);
+
+    gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, rt, 0);
+    gl.framebufferRenderbuffer(gl.FRAMEBUFFER, gl.DEPTH_ATTACHMENT, gl.RENDERBUFFER, db);
+    
+    gl.bindTexture(gl.TEXTURE_2D, null);
+    gl.bindRenderbuffer(gl.RENDERBUFFER, null);
+    gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+
+    return { frameBuffer:fb, id:rt, depth:db, width:w, height:h};
+}
 function initShaders(gl, id) {
     var shaderProgram;
     var fragmentShader = getShader(gl, id+"-fs");
@@ -175,10 +204,44 @@ function initRandTexture(gl) {
     data.width = data.height = 256;
     gl.randTex = data;
 }
-function drawMesh(gl, material, mesh) {
+
+function bindTarget(gl, target) {
+    if(target == null) {
+        gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+        gl.viewport(0, 0, gl.canvasSize[0], gl.canvasSize[1]);
+    }
+    else {
+        gl.bindFramebuffer(gl.FRAMEBUFFER, target.frameBuffer);
+        gl.viewport(0, 0, target.width, target.height);
+    }
+}
+
+function clearTarget(gl, target) {
+    bindTarget(gl, target);
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+}
+function drawMesh(gl, material, mesh, target) {
+    bindTarget(gl, target);
+
     var shader = material.shader;
     if(shader == null) return;
     gl.useProgram(shader);
+
+
+    if(material.zTest == false) {
+        gl.disable(gl.DEPTH_TEST);
+    }
+    else {
+        gl.enable(gl.DEPTH_TEST);
+    }
+    if(material.blend == false) {
+        gl.disable(gl.BLEND);
+    }
+    else {
+        gl.enable(gl.BLEND);
+        gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+    }
+
     for(var i = 0; i < shader.uniforms.length; ++i) {
         var uniform = shader.uniforms[i];
         var name = uniform.name;

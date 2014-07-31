@@ -197,12 +197,14 @@ function initShaders(gl, id) {
 }
 function initRandTexture(gl) {
     var data = [];
-    for(var i = 0; i < 256*256*4; ++i) {
+    var s = 1024;
+    for(var i = 0; i < s*s*4; ++i) {
         var r = Math.random();
         data[i] = r;
     }
-    data.width = data.height = 256;
+    data.width = data.height = s;
     gl.randTex = data;
+    gl.randTex_size = [s,s,1];
 }
 
 function bindTarget(gl, target) {

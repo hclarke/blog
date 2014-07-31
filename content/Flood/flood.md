@@ -159,8 +159,9 @@ vec3 HCLTosRGB(vec3 c) {
 
 
 	uniform sampler2D randTex;
+    uniform vec2 randTex_size;
 	vec4 rand( vec2 p) {
-		p = floor(p*256.0)/256.0;
+		p = floor(p*randTex_size)/randTex_size;
     	vec4 r = texture2D( randTex, p, -100.0 );
     	return r;
 	}

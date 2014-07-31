@@ -25,6 +25,6 @@ DEFAULT_PAGINATION = 10
 # Uncomment following line if you want document-relative URLs when developing
 RELATIVE_URLS = True
 
-PLUGINS = ['inlineimages', 'render_math']
+PLUGINS = ['inlineimages', 'render_math', 'hashtag']
 
 STATIC_PATHS = ['scripts']

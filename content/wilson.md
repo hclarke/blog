@@ -1,5 +1,5 @@
 Title: aleviating wilson's frustration
-Date: 2014-08-15 13:30
+Date: 2014-08-15 16:00
 Tags: maze, wilson's algorithm
 Category: demos
 Slug: wilson

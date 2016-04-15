@@ -1,4 +1,4 @@
-Title: capture the GIF
+Title: Capture the GIF
 Date: 2016-04-15 19:30
 Tags: tools
 Category: tools

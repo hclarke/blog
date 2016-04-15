@@ -252,7 +252,10 @@ function drawMesh(gl, material, mesh, target) {
         if(data == null) data = gl[name];
         if(data == null) data = gl.canvas[name];
         if(data == null) data = this[name];
-        if(data == null) continue;
+        if(data == null) {
+            alert("missing data: " + name)
+            continue;
+        }
         assignUniform(gl, shader, uniform, data);
     }
     var vertexCount = 0;
@@ -315,6 +318,12 @@ function vadd(a, b) {
     var l = Math.min(a.length, b.length);
     var r = new Array(l);
     for(var i = 0; i < l; ++i)  {r[i] = a[i]+b[i]; }
+    return r;
+}
+function vsub(a,b) {
+    var l = Math.min(a.length, b.length);
+    var r = new Array(l);
+    for(var i = 0; i < l; ++i)  {r[i] = a[i]-b[i]; }
     return r;
 }
 function mmul(a, b) {

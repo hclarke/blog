@@ -8,7 +8,7 @@ def add_twitter(generator, metadata):
     slug = metadata['slug']
     slug_bytes = six.b(slug)
     h = hashlib.md5(slug_bytes).hexdigest()
-    hashtag = "hc"+h[:4]
+    hashtag = "hc"+h[:5]
     metadata['hashtag'] = hashtag
 
 def register():

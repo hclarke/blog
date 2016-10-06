@@ -1,7 +1,7 @@
 Title: aleviating wilson's frustration
 Date: 2014-08-15 16:00
 Tags: maze, wilson's algorithm
-Category: demos
+Category: blag
 Slug: wilson
 Summary: less obnoxious variant of wilson's maze algorithm
 <div style="text-align:center;">

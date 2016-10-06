@@ -5,7 +5,7 @@ Category: tools
 Slug: capture-the-gif
 Summary: capturing animated GIFs from unity
 
-Many moons ago, I noticed a lack of tools for recording animated GIFs in Unity. So, I did the obvious thing and made one. We (Duaelist studios) released it in the Unity asset store, mostly as a way to learn how the asset store worked. Last week, I took over maintenance of the project, and I want to tell y'all about some of the things I learned, both about the Asset Store, and animated GIFs.
+Many moons ago, I noticed a lack of tools for recording animated GIFs in Unity. So, I did the obvious thing and made one. We (Duaelist studios) released it in the Unity asset store, mostly as a way to learn how the asset store worked. Last week, I took over maintenance of the project, and I want to tell ya some of the things I learned, both about the Asset Store, and animated GIFs.
 
 If you're just looking for the asset, find it [here](https://www.assetstore.unity3d.com/en/#!/content/59922).
 
@@ -38,6 +38,7 @@ Other common techniques:
 - use a kd-tree or an octree, and assign colours in a breadth-first manner. faster, but worse colours
 - use some k-means clustering algorithm. horribly slow, but should give good colours.
 - use a preset palette, and look like 1980
+
 
 ## Truecolour vs Animation
 

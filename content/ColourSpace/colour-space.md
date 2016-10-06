@@ -1,7 +1,7 @@
 Title: colour picker
 Date: 2014-07-6 20:30
 Tags: graphics, colour
-Category: toys
+Category: tools
 Slug: colour-picker
 Summary: colour picker
 

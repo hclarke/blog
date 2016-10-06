@@ -253,7 +253,7 @@ function drawMesh(gl, material, mesh, target) {
         if(data == null) data = gl.canvas[name];
         if(data == null) data = this[name];
         if(data == null) {
-            alert("missing data: " + name)
+            console.log("missing data: " + name);
             continue;
         }
         assignUniform(gl, shader, uniform, data);

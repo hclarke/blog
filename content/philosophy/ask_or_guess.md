@@ -1,7 +1,7 @@
 Title: communication breakdown
 Date: 2014-07-16 10:30
 Tags: communication
-Category: thoughts on stuff
+Category: blag
 Slug: communication-breakdown
 Summary: some things i thought were interesting about words
 

@@ -4,12 +4,13 @@ Tags: gamedev, math
 Category: blag
 Slug: prng-reference
 Summary: reference guide for pseudorandom number generators
+Status: draft
 
 There's a ton of information out there on pseudorandom number generators and using random numbers in your programs, but it can be hard to navigate. This is intended primarily as a reference, and secondarily as a learning resource. It contains sample implementations, design patterns, and brief explanations.
 
 I intend to update this over time. Suggestions/comments welcome (tweet at me)!
 
-Contents:
+## Contents:
 
 - <a href="#Notation">Notation</a>
 - <a href="CryptographicPRNGs">Cryptographic PRNGs</a>
@@ -28,7 +29,7 @@ Contents:
 
 This guide uses c/c++ style pseudocode, and sometimes actual c code.
 
-Placeholder types:
+## Placeholder types:
 
 - State : struct that holds a PRNG's current state
 - Key   : part of State that is set on initialization and doesn't get updated
@@ -38,10 +39,15 @@ Placeholder types:
 --------
 
 
-- <a href="CryptographicPRNGs">Cryptographic PRNGs</a>
+# <a name="CryptographicPRNGs">Cryptographic PRNGs</a>
 
 Try to make your own if you want, but don't use it for anything until it's selected in [eSTREAM]() or something.
 the basic idea behind most of them is that you want to scramble up your generator's state in an invertible (but confusing and diffusing) way, and then output it with a many-to-one function. 
+
+Here's a couple good ones (in 2016):
+
+- [Salsa20](https://en.wikipedia.org/wiki/Salsa20)/[ChaCha20](https://en.wikipedia.org/wiki/Salsa20#ChaCha_variant)
+- [AES](https://en.wikipedia.org/wiki/Advanced_Encryption_Standard) in [CTR mode](https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#Counter_.28CTR.29)
 
 --------
 
@@ -50,6 +56,7 @@ the basic idea behind most of them is that you want to scramble up your generato
 
 There are 3 main types of PRNG based on their function signature: global state, passed state, and hashes.
 
+<br>
 ## Global State
 
 Global state generators keep their state in a global variable. You initialize it somewhere in your program before using it, and then call a function that updates the global state and returns a value.
@@ -66,17 +73,18 @@ uint rand() {
 }
 ~~~~
 
-pros:
+### pros:
 
 - simple to use
 - fastest in single-threaded case
 
-cons:
+### cons:
 
 - have to remember to initialize (some languages can do it for you)
 - can't parallelize
 - difficult to reproduce results in complex programs
 
+<br>
 ## Passed state
 
 Passed state generators have their state passed in as a pointer/reference parameter (or in an object oriented language, the state is an object with a rand() member function).
@@ -90,19 +98,20 @@ uint rand(State* state) {
 }
 ~~~~
 
-pros:
+### pros:
 
 - almost as fast as global state
 - parallelizable by initializing one per thread
 - easier to reproduce results by giving different parts of program different states
 - can be easily turned into a global generator
 
-cons:
+### cons:
 
 - have to pass the state around
 - can misuse by initializing two copies with same key
 - still has reproducibility difficulties
 
+<br>
 ## Hash
 
 Hash based generators have all of their state passed in, and they don't update that state. They rely on the user pass in a different (probably sequential) index with every call
@@ -113,14 +122,14 @@ uint rand(Key key, uint index) {
 }
 ~~~~
 
-pros:
+### pros:
 
 - easiest to reproduce results in complex programs
 - trivially parallelizable
 - always has period of 2^N, where N is bits in index
 - can be used to make a (slowish) global/passed state generator
 
-cons:
+### cons:
 
 - slower (needs more operations to get good statistical qualities)
 - have to come up with unique keys all over your program
@@ -132,7 +141,7 @@ cons:
 
 Here's some common operations used in creating random number generators. they can be used to update a state, or hash an index.
 
-some key principles are:
+### some key principles are:
 
 - output bits should depend on many input bits
 - output and input should be different in roughly half of the bits, on average
@@ -308,13 +317,22 @@ double to_double_balanced(uint64_t x) {
 get a random number in [0,len)
 
 ~~~~
-uint range(uint len) {
+uint uniform(uint len) {
   uint limit = ~0 - ~0 % len;
   uint x;
   do {
     x = rand();
   } while (x >= limit);
   return x%len;
+}
+~~~~
+
+Get a random number in [start,end)
+
+~~~~
+uint range(uint start, uint end) {
+  uint len = end-start;
+  return start + uniform(len);
 }
 ~~~~
 

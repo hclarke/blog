@@ -122,7 +122,7 @@ def process_summary(instance, ignore_within):
     end_tag = '</%s>' % _WRAP_LATEX if _WRAP_LATEX is not None else ''
 
     # use content's _get_summary method to obtain summary
-    summary = instance._get_summary()
+    summary = instance._summary
 
     # Determine if there is any math in the summary which are not within the
     # ignore_within tags

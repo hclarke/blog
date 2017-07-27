@@ -36,10 +36,9 @@ def replace_paths(instance):
     if instance._content == None:
         return
     siteurl = instance._context['localsiteurl']
-    dirpath = '/'.join((siteurl, instance.relative_dir))
+    dirpath = instance.relative_dir
     dirpath = dirpath.replace('\\', '/')
     instance._content = re.sub(r'{dirname}', dirpath, instance._content)
-    print instance.relative_dir, instance._context['localsiteurl']
 
 def register():
     signals.get_generators.connect(get_generators)

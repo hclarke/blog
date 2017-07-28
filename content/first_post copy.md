@@ -6,4 +6,4 @@ Slug: wat-post
 Summary: wat post
 Status: draft
 
-this post is the wat post. welcome to my blag.
+this post is the wat post. welcome to my blag!

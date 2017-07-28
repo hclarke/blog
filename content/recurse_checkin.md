@@ -4,7 +4,7 @@ Tags: blag
 Category: blag
 Slug: recurse-checkin
 Summary: finally got my blog set up reasonably
-Status: draft
+Status: published
 
 Hey humans,
 

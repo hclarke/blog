@@ -19,7 +19,19 @@ The compiler needs a way to turn a field name into an offset from a pointer.
 
 In C, the compiler uses a greedy algorithm to to this: it walks through the fields in your struct, and puts that field at the next possible spot. so, it advances by `sizeof()` after every field, and then skips ahead to the next multiple of `alignof()` before every field, and then the size of the struct is rounded up to a multiple of the largest alignment in the struct.
 
-In other languages, the compiler might reorder the fields to pack them more efficiently. It might change `(int16,int32,int16)` into `(int32,int16,int16)`, since the former order would take 96 bytes, while the latter would take 64.
+In other languages, the compiler might reorder the fields to pack them more efficiently. so, say you had this struct:
+
+```
+struct Foo {
+  int16 a;
+  int32 b;
+  int16 c;
+};
+```
+
+A C compiler would lay that out in the order `a b c`, and it would be 96 bits, because `b` would need to go on a 4 byte boundary, and the whole struct gets rounded up to the next multiple of 4 bytes
+
+A smarter compiler could lay it out in the order `b a c`, and it would be 64 bits wide, with no gaps between fields
 
 # Separating Layout from Interface
 
@@ -53,13 +65,13 @@ layout Vec3_YXZ : Vec3 {
 };
 ```
 
-and a function could looks something like this:
+And a function could looks something like this:
 
 ```
 void foo<V>(V x) where V:Vec3 { ... }
 ```
 
-but it'd be tedious to write it out every time, so you'd want this to mean the same:
+But it'd be tedious to write it out every time, so you'd want this to mean the same:
 
 ```
 void foo(Vec3 x) { ... }
@@ -74,4 +86,24 @@ layout Vec2 XZ(Vec3 v) {
 }
 ```
 
-this would make a Vec2 layout from a Vec3 layout. The idea here is basically to allow more controlled type punning.
+This would make a Vec2 layout from a Vec3 layout. The idea here is basically to allow more controlled [type punning](https://en.wikipedia.org/wiki/Type_punning#Floating-point_example).
+
+To use this, you might have a casting syntax:
+
+```
+void xz_move(Vec3* pos, Vec2 offset) {
+  Vec2* xz_pos = (XZ*)pos;
+  *xz_pos += offset;
+}
+```
+
+And without eliding the layouts, that would be:
+
+```
+void xz_move<V3,V2>(V3* pos, V2 offset) where V3:Vec3, V2:Vec2 {
+  XZ(V3)* xz_pos = (XZ*)pos;
+  *xz_pos += offset;
+}
+```
+
+That's all for now. If this inspired any thoughts, hit the tweet button below!

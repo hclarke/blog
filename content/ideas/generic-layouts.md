@@ -1,10 +1,10 @@
 Title: Language Idea: Generic Memory Layouts
-Date: 2017-09-24 12:30
+Date: 2017-09-24 16:00
 Tags: blag, language
 Category: blag
 Slug: generic-memory-layouts
 Summary: Language ideas specifying memory layout and abstracting over it
-Status: draft
+Status: published
 
 Sometimes I have thoughts on language features that would be fun to play around with. But writing a compiler is currently low on my priorities, so I'll dump it here instead.
 

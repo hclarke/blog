@@ -1,10 +1,10 @@
 Title: PRNG Reference
-Date: 2016-10-16 13:30
+Date: 2017-09-30 21:00
 Tags: gamedev, math
-Category: blag
+Category: reference
 Slug: prng-reference
 Summary: reference guide for pseudorandom number generators
-Status: draft
+Status: published
 
 There's a ton of information out there on pseudorandom number generators and using random numbers in your programs, but it can be hard to navigate. This is intended primarily as a reference, and secondarily as a learning resource. It contains sample implementations, design patterns, and brief explanations.
 
@@ -13,7 +13,7 @@ I intend to update this over time. Suggestions/comments welcome (tweet at me)!
 ## Contents:
 
 - <a href="#Notation">Notation</a>
-- <a href="CryptographicPRNGs">Cryptographic PRNGs</a>
+- <a href="#CryptographicPRNGs">Cryptographic PRNGs</a>
 - <a href="#PRNGState">PRNG State</a>
 - <a href="#Primitives">Primitives</a>
 - <a href="#Implementations">Implementations</a>
@@ -33,8 +33,8 @@ This guide uses c/c++ style pseudocode, and sometimes actual c code.
 
 - State : struct that holds a PRNG's current state
 - Key   : part of State that is set on initialization and doesn't get updated
-- uint  : an unsigned integer with unknown/unspecified number of bits
-- float : a floating point number of unspecified precision
+- uint  : an unsigned integer. either 32 bits, or an unspecified number
+- float : a floating point number. either 32 bits, or unspecified number
 
 --------
 
@@ -44,7 +44,7 @@ This guide uses c/c++ style pseudocode, and sometimes actual c code.
 Try to make your own if you want, but don't use it for anything until it's selected in [eSTREAM]() or something.
 the basic idea behind most of them is that you want to scramble up your generator's state in an invertible (but confusing and diffusing) way, and then output it with a many-to-one function. 
 
-Here's a couple good ones (in 2016):
+Here's a couple good ones (don't trust this list as anything but a starting point. it will get stale):
 
 - [Salsa20](https://en.wikipedia.org/wiki/Salsa20)/[ChaCha20](https://en.wikipedia.org/wiki/Salsa20#ChaCha_variant)
 - [AES](https://en.wikipedia.org/wiki/Advanced_Encryption_Standard) in [CTR mode](https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#Counter_.28CTR.29)
@@ -57,6 +57,7 @@ Here's a couple good ones (in 2016):
 There are 3 main types of PRNG based on their function signature: global state, passed state, and hashes.
 
 <br>
+
 ## Global State
 
 Global state generators keep their state in a global variable. You initialize it somewhere in your program before using it, and then call a function that updates the global state and returns a value.
@@ -85,6 +86,7 @@ uint rand() {
 - difficult to reproduce results in complex programs
 
 <br>
+
 ## Passed state
 
 Passed state generators have their state passed in as a pointer/reference parameter (or in an object oriented language, the state is an object with a rand() member function).
@@ -112,6 +114,7 @@ uint rand(State* state) {
 - still has reproducibility difficulties
 
 <br>
+
 ## Hash
 
 Hash based generators have all of their state passed in, and they don't update that state. They rely on the user pass in a different (probably sequential) index with every call
@@ -145,7 +148,7 @@ Here's some common operations used in creating random number generators. they ca
 
 - output bits should depend on many input bits
 - output and input should be different in roughly half of the bits, on average
-- operations should be invertible, so that they 
+- operations should be invertible (if they aren't, some outputs will be impossible, others will occur multiple times)
 
 ## xor/add with key
 
@@ -182,7 +185,7 @@ x ^= (x>>27) | (x<<(32-27));
 
 ## byte lookup table
 
-Have an array of bytes 0-255, and shuffle it. use that table to replace bytes in your input. this creates good randomness per byte, since you can end up with any permutation
+Have an array of bytes 0-255, and shuffle it (or hand-craft one). use that table to replace bytes in your input. this creates good randomness per byte, since you can end up with any permutation
 
 ~~~~
 char* b = &x;
@@ -355,7 +358,7 @@ void shuffle(void** v, uint c) {
 --------
 
 
-# <a name="WeigntedSelect">Weighted Select</a>
+# <a name="WeightedSelect">Weighted Select</a>
 
 Select an index from an array of weights (non-normalized probabilities).
 
@@ -381,7 +384,9 @@ int weighted_select(float* weightv, int weightc) {
 
 # <a name="BagRandom">Bag Random</a>
 
-Sample without replacement. start 'current' at -1. returns NULL and sets 'current' to -1 when the bag is empty.
+Sample without replacement. This is based on the fischer yeates shuffle, but yields a result at each step rather than doing the full shuffle up front.
+
+to use: initialize 'current' to -1. returns NULL and sets 'current' to -1 when the bag is empty.
 
 ~~~~
 void* bag_random(void** itemv, int itemc, int* current) {
@@ -389,6 +394,23 @@ void* bag_random(void** itemv, int itemc, int* current) {
   if(cur == itemc) {
     *current = -1;
     return NULL;
+  }
+  var swp = cur+range(itemc-cur);
+
+  void* temp = itemv[swp];
+  itemv[swp] = itemv[cur];
+  itemv[cur] = temp;
+  return temp;
+}
+~~~~
+
+and here's a looping variant of it, where instead of returning NULL, it starts the process over:
+
+~~~~
+void* bag_random_looping(void** itemv, int itemc, int* current) {
+  int cur = *current += 1;
+  if(cur == itemc) {
+    cur = *current = 0;
   }
   var swp = cur+range(itemc-cur);
 

@@ -1,5 +1,6 @@
 Title: PRNG Reference
 Date: 2017-09-30 21:00
+Modified: 2017-10-01 21:00
 Tags: gamedev, math
 Category: reference
 Slug: prng-reference
@@ -9,6 +10,8 @@ Status: published
 There's a ton of information out there on pseudorandom number generators and using random numbers in your programs, but it can be hard to navigate. This is intended primarily as a reference, and secondarily as a learning resource. It contains sample implementations, design patterns, and brief explanations.
 
 I intend to update this over time. Suggestions/comments welcome (tweet at me)!
+
+*Last Updated: 2017-10-01*
 
 ## Contents:
 
@@ -281,19 +284,19 @@ uint64_t rand(uint64_t key, uint64_t index) {
 
 # <a name="Floats">Floats</a>
 
-To get a floating point value between 0 and 1, set the exponent to 0, the mantissa to random bits, and then subtract 1.0
+To get a floating point value in the `[0,1)` range, set the exponent to 0 (which is 127, since it's interpreted as an 8 bit number minus 127), the mantissa to random bits, reinterpret that as a float in `[1,2)`, and then subtract 1.0
+
+This isn't the only way to do it, but it's the fastest I'm aware of
 
 ~~~~
 float to_float(uint32_t x) {
   x = (x>>9) | 0x3f800000;
-  float* f = (float*)(&x);
-  return *f - 1.0f;
+  return *((float*)&x) - 1.0f;
 }
 
 double to_double(uint64_t x) {
   x = (x>>12) | 0x3ff0000000000000ULL;
-  double* d = (double*)(&x);
-  return *d - 1.0;
+  return *((double*)&x) - 1.0;
 }
 ~~~~
 
@@ -302,22 +305,50 @@ and for the -1 to 1 interval, set the exponent to 1 and subtract 3.0:
 ~~~~
 float to_float_balanced(uint32_t x) {
   x = (x>>9) | 0x40000000;
-  float* f = (float*)(&x);
-  return *f - 3.0f;
+  return *((float*)&x) - 3.0f;
 }
 
 double to_double_balanced(uint64_t x) {
   x = (x>>12) | 0x4000000000000000ULL;
-  double* d = (double*)(&x);
-  return *d - 3.0;
+  return *((double*)&x) - 3.0;
 }
 ~~~~
 
+Each of these uses 23 bits of randomness (for 32 bit floats). You can use 24 bits (25 for the -1 to 1 case), and thus get a bit more precision, by taking a 24 bit int, casting it to a float, and then dividing by 2^24. But both the int to float cast and the divide are relatively slow instructions compared to the bit twiddling and subtraction.
+
+Note on the balanced versions: they don't generate negative zero. you can get another bit of precision by generating a float in `[0,1)` and randomly flipping the sign bit (which can give you negative zero, and is in the `(-1,1)` range):
+
+~~~~
+float to_float_balanced(uint32_t x) {
+  uint32_t sign = x&0x70000000;
+  x = (x>>9) | 0x3f800000;
+  float f = *((float*)&x) - 1.0f;
+  x = *((uint32_t*)&f;
+  x |= sign;
+  return *((float*)&x);
+}
+~~~~
+
+Another way to do it is to generate every possible float between 0 and 1, with probability based on how densely packed the floating point values are. Conceptually, this would be generating a real number uniformly between 0 and 1, and truncating it to the nearest floating point value. Here's a slow way to do that:
+
+~~~~
+float random_float01() {
+  uint exponent = 126; //exponent is -1 after offset, which is the [0.5,1) range
+  for(;exponent && rand_bool(); exponent -= 1) { /* just decrement */ }
+  
+  uint x = exponent<<23 | rand()>>9;
+  return *((float*)&x);
+}
+~~~~
+
+the basic idea here is that 50% of the time, the result should be in `[0.5, 1)`, then 25% of the time it should be `[0.25, 0.5)`, etc. and you can do that by flipping coins and decrementing the exponent, then setting the mantissa to random bits. you could speed this process up by generating more bits at a time and using a `leading_zeros` instruction, rather than doing individual coin flips
+
+Note: this will generate [denormal floats](https://en.wikipedia.org/wiki/Denormal_number). if you don't want them, truncate them to zero or something. 
 
 --------
 # <a name="Range">Range</a>
 
-get a random number in [0,len)
+get a random number in `[0,len)`
 
 ~~~~
 uint uniform(uint len) {
@@ -330,7 +361,7 @@ uint uniform(uint len) {
 }
 ~~~~
 
-Get a random number in [start,end)
+Get a random number in `[start,end)`
 
 ~~~~
 uint range(uint start, uint end) {

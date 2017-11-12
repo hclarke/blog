@@ -10,7 +10,7 @@ from pelican.utils import mkdir_p
  
 logger = logging.getLogger(__name__)
  
-INLINE_STATIC_EXTENSIONS = ('png', 'jpeg', 'jpg', 'js', 'css')
+INLINE_STATIC_EXTENSIONS = ('png', 'jpeg', 'jpg', 'js', 'css', 'wav')
  
 class InlineImagesGenerator(Generator):
 

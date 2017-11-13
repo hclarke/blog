@@ -8,4 +8,4 @@ Status: draft
 
 I started reading Stephen Wolfram's "A New Kind of Science" a few days ago, and when i got to [page 130](http://www.wolframscience.com/nks/p130--recursive-sequences/), I thought, "hey, those look like audio".
 
-So I wrote a [c program]() to turn a few of them into wav files: [c](new_science/c.wav), [e](new_science/e.wav), [f](new_science/f.wav)
+So I wrote a [c program](https://gist.github.com/hclarke/4be53b38786653cda5339d3e20ab44ef) to turn a few of them into wav files: [c](new_science/c.wav), [e](new_science/e.wav), [f](new_science/f.wav)

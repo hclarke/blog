@@ -6,13 +6,4 @@ Slug: crates
 Summary: fair play with loot crates?
 Status: draft
 
-For gamers, the point of a game is fun, community, storytelling, etc. (hereafter referred to as "fun")
-
-For publishers, the point of a game is to turn money into more money.
-
-Publishers need to expect money, or they won't make games. Gamers need to expect fun, or they won't buy games. Publishers can try to play fair, where they actually deliver on fun, or they can defect by making gamers expect fun without delivering. Gamers can also defect by pirating games, or paying little/nothing in pay-what-you-can schemes.
-
-# Loot Crates
-
-![]({dirname}/mimic.jpg)
-Gamers are accusing EA of defecting with their loot crate system. They were promised a $60 game that's fun, but claim that you have to pay much more than that to get the expected amount of fun, if it's possible at all
+<img src="{dirname}/chest.png" id="chest" onClick="(function(this){this.src=\"{dirname}/mimic.jpg\";})()"/>

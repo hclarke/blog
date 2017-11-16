@@ -3,7 +3,7 @@ Date: 2017-11-16 20:00
 Tags: blag
 Category: blag
 Slug: crates
-Summary: squeezing money from a stone
+Summary: fair play with loot crates?
 Status: draft
 
 For gamers, the point of a game is fun, community, storytelling, etc. (hereafter referred to as "fun")
@@ -14,4 +14,5 @@ Publishers need to expect money, or they won't make games. Gamers need to expect
 
 # Loot Crates
 
+![]({dirname}/mimic.jpg)
 Gamers are accusing EA of defecting with their loot crate system. They were promised a $60 game that's fun, but claim that you have to pay much more than that to get the expected amount of fun, if it's possible at all

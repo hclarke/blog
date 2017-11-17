@@ -6,7 +6,7 @@ Slug: crates
 Summary: fair play with loot crates?
 Status: draft
 
-<img src="{dirname}/chest.png" id="chest" style="horizontal-align:middle" onClick="mimic(this)"/>
+<div style="text-align:center; width:100%"><img src="{dirname}/chest.png" id="chest" onClick="mimic(this)"/></div>
 
 <script language="javascript">
     (new Image()).src = "{dirname}/mimic.jpg";

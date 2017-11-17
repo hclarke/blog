@@ -30,6 +30,7 @@ Overwatch seems to have kicked off the recent trend. They're annoying, but they 
 # Sins
 
 The things players hate about loot crates fall into a few categories:
+
 - feeling like richer players are leaving them behind
 - feeling ripped off after opening crates
 - worry about gambling addiction
@@ -48,6 +49,7 @@ And a final sin, that mostly goes unmentioned: crates encourage devs/publishers 
 # Redemption
 
 There are a some good things about loot crates, if they could overcome the downsides:
+
 - developer/publisher can make money off the game
 - it's sorta a pay-what-you-want model
 - opening crates is fun
@@ -58,6 +60,7 @@ So, what would crates look like if they were fair?
 Overwatch is almost there in China, where they were legally required to change how crates work due to gambling laws. Instead of selling loot crates, they sell in-game currency, and give you a bonus loot crate with each purchase. That effectively lowers the variance, and makes it easier to get the things you actually want, rather than be totally at the whims of the crate gods. They also tell you the probabilities.
 
 Here's a proposal for a loot crate system that isn't awful:
+
 - have in-game currency
 - you can buy crates with it
 - you can buy anything in a crate with it
@@ -69,6 +72,7 @@ Here's a proposal for a loot crate system that isn't awful:
 - cosmetic items preferred
 
 on non-cosmetic items:
+
 - unlocking a new things should happen as you get bored of last one
 - unlocking characters is great, because you can only play one at a time
 - unlocking skills is good if you can only have a few at once
@@ -78,6 +82,7 @@ on non-cosmetic items:
 - maps/leves are terrible because they fragment playerbase
 
 on cosmetic things:
+
 - have matching sets, so if you randomly get 2 pieces, you'll want to buy the 3rd
 - things should still be recognizable
 - veblen goods are okay

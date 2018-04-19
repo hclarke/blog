@@ -1,14 +1,14 @@
 Title: state machines
-Date: 2018-04-19 18:00
+Date: 2018-04-19 19:00
 Tags: blag
 Category: blag
 Slug: state-machines
 Summary: dirt simple state machines (in c)
-Status: draft
+Status: published
 
-Here's a cool trick I stumbled upon for writing state machines. Works in C, and many other languages:
+Here's a cool trick I stumbled upon for writing state machines. Works in C, and many other languages.
 
-Each state is a function, and it returns the next state (also a function, but you have to wrap it up in a struct because C doesn't allow recursive typedefs)
+Each state is a function, and it returns the next state (also a function). the outer loop is `loop { state = state(); }`
 
 here's an example for a state machine to parse the regular expression "(ab)*c"
 
@@ -17,7 +17,7 @@ here's an example for a state machine to parse the regular expression "(ab)*c"
 
 #include "stdio.h"
 
-//state machine types
+//state machine types (C won't let you do a self-referential typedef, so wraping it in a struct is necessary)
 typedef struct state state;
 typedef state state_fn(int c);
 struct state { state_fn* fn; };

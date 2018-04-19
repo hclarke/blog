@@ -8,7 +8,9 @@ Status: published
 
 Here's a cool trick I stumbled upon for writing state machines. Works in C, and many other languages.
 
-Each state is a function, and it returns the next state (also a function). the outer loop is `loop { state = state(); }`
+Each state is a function, and it returns the next state (also a function). 
+
+the outer loop is `"loop { state = state(); }"`
 
 here's an example for a state machine to parse the regular expression "(ab)*c"
 

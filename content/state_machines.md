@@ -10,9 +10,9 @@ Here's a cool trick I stumbled upon for writing state machines. Works in C, and 
 
 Each state is a function, and it returns the next state (also a function). 
 
-the outer loop is `"loop { state = state(); }"`
+To run the state machine, you can use a loop similar to this: `"while(!done) { state = state(); }"`
 
-here's an example for a state machine to parse the regular expression "(ab)*c"
+Here's an example for a state machine to parse the regular expression "(ab)*c"
 
 ```
 /* (ab)*c.c */

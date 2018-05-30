@@ -328,6 +328,7 @@ var HCanvas = document.getElementById("H-canvas");
 var wasDown = false;
 var clickSpot = null;
 function updateH() {
+
     var canvas = HCanvas;
     var mstate = [canvas.mouseState[0] / canvas.gl.canvasSize[0], canvas.mouseState[1] / canvas.gl.canvasSize[1], canvas.mouseState[2]];
     
@@ -362,7 +363,6 @@ function updateH() {
     }
     rebuildColour();
 }
-setInterval(updateH, 1000/30);
 
 var SCanvas = document.getElementById("S-canvas");
 function updateS() {
@@ -371,6 +371,51 @@ function updateS() {
     if(mstate[2] == 0.0) return;
     split = mstate[0];
     rebuildColour();
+
+    
 }
-setInterval(updateS, 1000/30);
+
+var storedSearch = "";
+var updateCount = 0;
+function updateAll() {
+
+    
+    var search = new URLSearchParams(window.location.search);
+
+    //only update from URL if it changed
+    if(window.location.search != storedSearch) {
+        storedSearch = window.location.search;
+
+        if ( search.has("H")) {
+            hclColour[0] = parseFloat(search.get("H"));
+        }
+        if ( search.has("C")) {
+            hclColour[1] = parseFloat(search.get("C"));
+        }
+        if( search.has("L")) {
+            hclColour[2] = parseFloat(search.get("L"));
+        }
+        if ( search.has("split")) {
+            split = parseFloat(search.get("split"));
+        }
+    }
+
+    
+    updateH();
+    updateS();
+
+    if(updateCount % 30 == 0) {
+        search.set("H", hclColour[0].toString());
+        search.set("C", hclColour[1].toString());
+        search.set("L", hclColour[2].toString());
+        search.set("split", split.toString());
+        window.history.replaceState(null, null, '?' + search.toString());
+        storedSearch = window.location.search;
+    }
+
+    updateCount += 1;
+}
+
+
+setInterval(updateAll, 1000/30);
 </script>

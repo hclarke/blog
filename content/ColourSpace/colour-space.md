@@ -292,6 +292,24 @@ var pHex;
 var sHex0;
 var sHex1;
 
+function initColour() {
+
+    var search = new URLSearchParams(window.location.search);
+    if ( search.has("H")) {
+        hclColour[0] = parseFloat(search.get("H"));
+    }
+    if ( search.has("C")) {
+        hclColour[1] = parseFloat(search.get("C"));
+    }
+    if( search.has("L")) {
+        hclColour[2] = parseFloat(search.get("L"));
+    }
+    if ( search.has("split")) {
+        split = parseFloat(search.get("split"));
+    }
+}
+initColour();
+
 function colourByClass(c, hcl) {
     var blocks = document.getElementsByClassName(c);
     var hex = HCLToHex(hcl);
@@ -375,30 +393,11 @@ function updateS() {
     
 }
 
-var storedSearch = "";
 var updateCount = 0;
 function updateAll() {
 
     
     var search = new URLSearchParams(window.location.search);
-
-    //only update from URL if it changed
-    if(window.location.search != storedSearch) {
-        storedSearch = window.location.search;
-
-        if ( search.has("H")) {
-            hclColour[0] = parseFloat(search.get("H"));
-        }
-        if ( search.has("C")) {
-            hclColour[1] = parseFloat(search.get("C"));
-        }
-        if( search.has("L")) {
-            hclColour[2] = parseFloat(search.get("L"));
-        }
-        if ( search.has("split")) {
-            split = parseFloat(search.get("split"));
-        }
-    }
 
     
     updateH();

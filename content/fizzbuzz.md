@@ -6,7 +6,7 @@ Slug: rust-fizzbuzz
 Summary: rust language construct makes annoying code less annoying
 Status: draft
 
-If you've written a [FizzBuzz]() program, you probably noticed that the cases don't simplify nicely. It's such a simple program, but there's duplicated code that's difficult to get rid of.
+If you've written a [FizzBuzz]() program, you probably noticed that the cases don't simplify nicely. It's such a small program, but there's duplicated code that's difficult to get rid of.
 
 Rust's match statements are good for simplifying this sort of thing.
 
@@ -45,26 +45,28 @@ fn fizz_buzz(n : usize) {
 }
 ```
 
-If you're like me, this solution feels like wearing an old wool sweater; It gets the job done efficiently, but it's itchy. The cases are in the reverse order of the problem statement, and you're repeating the divisibility check, but it's hard to come up with a nicer solution that isn't slower. 
+If you're like me, this solution feels like wearing an old wool sweater: It gets the job done efficiently, but it's itchy. The divisibility checks are duplicated, and storing them in variables doesn't make it any nicer.
 
 # Wired solution
 
-It gets a bit nicer with a rust `match` statement, which lets you pack both divisibility checks into a tuple, and enumerate all 4 cases without the clutter of nested `if`s or repeated checks (and the cases are in any order you want!):
+It gets a bit nicer with a rust `match` statement, which lets you pack both divisibility checks into a tuple, and enumerate all 4 cases without the clutter of nested `if`s or repeated checks. It should compile to more or less the same thing as the itchy solution:
+
+[*note: `_` matches anything*]
 
 ```
 fn fizz_buzz(n : usize) {
   for i in 1..n+1 {
-    match (i%3==0,i%5==0) {
-      (false,false) => println!("{}", i),
-      (true ,false) => println!("Fizz"),
-      (false,true ) => println!("Buzz"),
-      (true ,true ) => println!("FizzBuzz"),
+    match (i%3,i%5) {
+      (0,0) => println!("FizzBuzz"), //bonus: the pattern looks like an owl
+      (0,_) => println!("Fizz"),
+      (_,0) => println!("Buzz"),
+      (_,_) => println!("{}", i),
     }
   }
 }
 ```
 
-Or, by noticing that you can solve the problem manually for 15 cases and loop through them, you can use rust's "or" patterns and fallthrough:
+Or, by noticing that you can solve the problem manually for 15 cases and loop through them, you can use rust's "or" patterns:
 
 ```
 fn fizz_buzz(n : usize) {
@@ -73,7 +75,7 @@ fn fizz_buzz(n : usize) {
         3|6|9|12 => println!("Fizz"),
         5|10     => println!("Buzz"),
         0        => println!("FizzBuzz"),
-        _        => println!("{}", i)
+        _        => println!("{}", i),
     }
   }
 }

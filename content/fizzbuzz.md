@@ -1,5 +1,5 @@
 Title: rust simplifies fizzbuzz
-Date: 2014-06-09 13:30
+Date: 2018-09-07 14:00
 Tags: blag
 Category: blag
 Slug: rust-fizzbuzz

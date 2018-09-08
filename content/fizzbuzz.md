@@ -1,8 +1,8 @@
-Title: rust simplifies fizzbuzz
-Date: 2018-09-07 14:00
+Title: Rust's match simplifies code
+Date: 2018-09-08 10:00
 Tags: blag
 Category: blag
-Slug: rust-fizzbuzz
+Slug: rust-match
 Summary: rust language construct makes annoying code less annoying
 Status: draft
 
@@ -76,6 +76,26 @@ fn fizz_buzz(n : usize) {
         5|10     => println!("Buzz"),
         0        => println!("FizzBuzz"),
         _        => println!("{}", i),
+    }
+  }
+}
+```
+
+# Bonus
+
+Imagine that you also want to print "x until Fizz" "x until Buzz" and "x until FizzBuzz" (whichever is coming next) along with the integer. You can do that with rust's match statements by binding variables, and using guards!
+
+
+```
+fn fizz_buzz(n : usize) {
+  for i in 1..n+1 {
+    match (3-i%3, 5-i%5) {
+      (3,5) => println!("FizzBuzz"),
+      (3,_) => println!("Fizz"),
+      (_,5) => println!("Buzz"),
+      (c3,c5) if c3 < c5 => println!("{} ({} until Fizz)", i, c3),
+      (c3,c5) if c3 > c5 => println!("{} ({} until Buzz)", i, c5),
+      (c3,_)             => println!("{} ({} until FizzBuzz)", i, c3),
     }
   }
 }

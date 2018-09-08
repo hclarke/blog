@@ -4,7 +4,7 @@ Tags: blag
 Category: blag
 Slug: rust-match
 Summary: rust language construct makes annoying code less annoying
-Status: draft
+Status: published
 
 If you've written a [FizzBuzz]() program, you probably noticed that the cases don't simplify nicely. It's such a small program, but there's duplicated code that's difficult to get rid of.
 

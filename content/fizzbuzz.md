@@ -81,9 +81,9 @@ fn fizz_buzz(n : usize) {
 }
 ```
 
-# Bonus
+# Bonus 🐷
 
-Imagine that you also want to print "x until Fizz" "x until Buzz" and "x until FizzBuzz" (whichever is coming next) along with the integer. You can do that with rust's match statements by binding variables, and using guards!
+Imagine that you also want to print "x until Fizz" "x until Buzz" and "x until FizzBuzz" (whichever is coming next) along with the integer. You can do that with rust's match statements by binding variables, and using guards (extra conditionals on match patterns)!
 
 
 ```

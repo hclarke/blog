@@ -211,8 +211,11 @@ struct GoldenRetriever : IDog {
 //etc.
 ```
 
+## A List
+
 Now, let's say you want to put these good boys in a linked list. You might try a linked list something like this:
 
+<img src="{dirname}/linked.jpg" style="display:block;margin-left:auto;margin-right:auto;width: 80%;">
 ```
 class Node {
 	public IDog dog;
@@ -220,14 +223,16 @@ class Node {
 }
 ```
 
-But if you tried to use a `LinkedList<IDog>`, you'd have a potential problem: the `data` field is a pointer. 
+But there's a potential problem: the `data` field is a pointer. Sometimes that's fine, but it's inefficient!
 
-<img src="{dirname}/linked.jpg" style="display:block;margin-left:auto;margin-right:auto;width: 80%;">
+## A cozier list
 
 It'd be more efficient if the data was held in the node, and only `Next` was a pointer. The dogs are structs, after all.
 
 So, let's try again. this time, using an interface for the node type:
 
+
+<img src="{dirname}/structs.jpg" style="display:block;margin-left:auto;margin-right:auto;width: 80%;">
 ```
 interface INode {
 	INode Next { get; set; }
@@ -239,9 +244,9 @@ class Node<T> : INode where T:struct,IDog {
 }
 ```
 
-<img src="{dirname}/structs.jpg" style="display:block;margin-left:auto;margin-right:auto;width: 80%;">
-
 this fixes the packing problem, but now you can't access the dogs through the interface. You can only walk past, knowing they're there, but out of reach.
+
+## Rank 2 solution
 
 This is where the Rank-2 functions come in. We'll add an `Accept` function to the list, which lets us pass a rank-2 function in and do something with the first dog. The Node fills the role of Existential type:
 

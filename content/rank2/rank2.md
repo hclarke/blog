@@ -216,7 +216,7 @@ class Node {
 
 But if you tried to use a `LinkedList<IDog>`, you'd have a potential problem: the `data` field is a pointer. 
 
-![linked list of pointers to dogs]({dirname}/linked.jpg)
+<img src="{dirname}/linked.jpg" style="width=100%;height=auto;">
 
 It'd be more efficient if the data was held in the node, and only `Next` was a pointer. The dogs are structs, after all.
 

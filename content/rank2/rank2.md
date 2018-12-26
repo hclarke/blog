@@ -6,12 +6,12 @@ Slug: rank2
 Summary: hacking rank 2 types into C#
 Status: draft
 
+With every sufficiently large C# project, there's a problem I inevitably run into: I want to call a generic function, but I've thrown out the type by casting to a base class/interface.
+
 <img src="https://upload.wikimedia.org/wikipedia/commons/9/92/Philip_Greenspun_and_Alex_the_dog.jpg" 
      style="display:block;margin-left:auto;margin-right:auto;width: 50%;">
      
 > Greenspun’s Tenth Rule: Any sufficiently complicated C or Fortran program contains an ad hoc informally-specified bug-ridden slow implementation of half of Common Lisp.
-
-With every sufficiently large C# project, there's a problem I inevitably run into: I want to call a generic function, but I've thrown out the type by casting to a base class/interface.
 
 Haskell's solution to this problem is [Existential Types](https://wiki.haskell.org/Existential_type) and [Rank 2 Functions](https://wiki.haskell.org/Rank-N_types) (don't worry if those are clear as mud), so I'll be shoehorning a half-baked version into C#!
 
@@ -168,7 +168,8 @@ interface IDog {
 }
 ```
 
-![longdog](https://upload.wikimedia.org/wikipedia/commons/3/3d/Longdog.jpg)
+<img src="https://upload.wikimedia.org/wikipedia/commons/3/3d/Longdog.jpg" 
+	style="display:block;margin-left:auto;margin-right:auto;width: 50%;">
 
 And some implementations:
 

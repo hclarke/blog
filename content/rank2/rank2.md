@@ -216,7 +216,7 @@ class Node {
 
 But if you tried to use a `LinkedList<IDog>`, you'd have a potential problem: the `data` field is a pointer. 
 
-<img src="{dirname}/linked.jpg" style="width=100%;height=auto;">
+<img src="{dirname}/linked.jpg" style="width:100%;height:auto;">
 
 It'd be more efficient if the data was held in the node, and only `Next` was a pointer. The dogs are structs, after all.
 
@@ -233,7 +233,7 @@ class Node<T> : INode where T:struct,IDog {
 }
 ```
 
-![linked list of dogs]({dirname}/structs.jpg)
+<img src="{dirname}/structs.jpg" style="width:100%;height:auto;">
 
 this fixes the packing problem, but now you can't access the dogs through the interface. You can only walk past, knowing they're there, but out of reach.
 

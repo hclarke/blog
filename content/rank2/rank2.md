@@ -160,16 +160,18 @@ struct ExistentialValue<Base,T> : IExistentialValue<Base> where T:struct,Base {
 # An Example
 
 Suppose you have a dog type:
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/3/3d/Longdog.jpg" 
+	style="display:block;margin-left:auto;margin-right:auto;width: 50%;">
 ```
 interface IDog {
 	bool IsGood { get; }
 	float Loyalty { get; }
-	void RunFast();
+	void Pet(float vigor);
 }
 ```
 
-<img src="https://upload.wikimedia.org/wikipedia/commons/3/3d/Longdog.jpg" 
-	style="display:block;margin-left:auto;margin-right:auto;width: 50%;">
+
 
 And some implementations:
 
@@ -220,7 +222,7 @@ class Node {
 
 But if you tried to use a `LinkedList<IDog>`, you'd have a potential problem: the `data` field is a pointer. 
 
-<img src="{dirname}/linked.jpg" style="width:100%;height:auto;">
+<img src="{dirname}/linked.jpg" style="display:block;margin-left:auto;margin-right:auto;width: 80%;">
 
 It'd be more efficient if the data was held in the node, and only `Next` was a pointer. The dogs are structs, after all.
 
@@ -237,7 +239,7 @@ class Node<T> : INode where T:struct,IDog {
 }
 ```
 
-<img src="{dirname}/structs.jpg" style="width:100%;height:auto;">
+<img src="{dirname}/structs.jpg" style="display:block;margin-left:auto;margin-right:auto;width: 80%;">
 
 this fixes the packing problem, but now you can't access the dogs through the interface. You can only walk past, knowing they're there, but out of reach.
 

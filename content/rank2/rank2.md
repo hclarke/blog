@@ -13,9 +13,9 @@ With every sufficiently large C# project, there's a problem I inevitably run int
      
 > Greenspun’s Tenth Rule: Any sufficiently complicated C or Fortran program contains an ad hoc informally-specified bug-ridden slow implementation of half of Common Lisp.
 
-Haskell's solution to this problem is [Existential Types](https://wiki.haskell.org/Existential_type) and [Rank 2 Functions](https://wiki.haskell.org/Rank-N_types) (don't worry if those are clear as mud), so I'll be shoehorning a half-baked version into C#!
+Haskell's solution to this problem is [Existential Types](https://wiki.haskell.org/Existential_type) and [Rank 2 Functions](https://wiki.haskell.org/Rank-N_types) (don't worry if those are clear as mud), so I'll be shoehorning a half-baked version into C#
 
-If you know with the [visitor pattern](https://en.wikipedia.org/wiki/Visitor_pattern), this should look familiar, except with generic methods on the visitor.
+If you know the [visitor pattern](https://en.wikipedia.org/wiki/Visitor_pattern), this should look familiar, except with generic methods on the visitor.
 
 # What's a Rank 2 Function?
 

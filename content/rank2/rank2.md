@@ -31,13 +31,13 @@ Also, any non-generic class, or any generic type with all of the generic paramet
 
 And a rank-0 function type is a function type that is rank-0, and a rank-0 function is an instance of that type.
 
-```C#
+```csharp
 delegate string SomeRank0Function(int arg);
 ```
 
 if C# didn't have delegates built in, you could use interfaces to define your own, and get the same result, but a lot more verbose:
 
-```
+```csharp
 interface SomeRank0Function {
 	string Invoke(int arg);
 }

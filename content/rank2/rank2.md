@@ -31,7 +31,7 @@ Also, any non-generic class, or any generic type with all of the generic paramet
 
 And a rank-0 function type is a function type that is rank-0, and a rank-0 function is an instance of that type.
 
-```
+```C#
 delegate string SomeRank0Function(int arg);
 ```
 

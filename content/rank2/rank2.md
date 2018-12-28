@@ -51,13 +51,13 @@ They have type parameters in the angle brackets after their name, and they use t
 
 Rank-1 function types have generic parameters in the angle brackets, and use those type parameters in the arguments and return type
 
-```
+```csharp
 delegate Result Rank1Function<T,Result>(T arg);
 ```
 
 and if c# didn't already have them build in, you could define them as:
 
-```
+```csharp
 interface Rank1Function<T,Result> {
 	Result Invoke(T arg);
 }
@@ -71,13 +71,13 @@ The only C# types that are like this are classes/structs with generic methods: t
 
 with some imaginary syntax, perhaps a C# Rank2 delegate would look like this, signifying that the `Arg` type parameter doesn't belong to the delegate, it belongs inside of it:
 
-```
+```csharp
 delegate void Rank2Function(<T>T arg);
 ```
 
 and a function that takes one and does something with it:
 
-```
+```csharp
 void DoRank2Stuff(Rank2Function f) {
 	//note: because the type variable is inside, we can pass multiple types as arguments
 	f(1);
@@ -88,7 +88,7 @@ void DoRank2Stuff(Rank2Function f) {
 
 sticking with the theme, here's an interface version of that Rank-2 delegate:
 
-```
+```csharp
 interface Rank2Function {
 	void Invoke<T>(T arg);
 }
@@ -102,7 +102,7 @@ There's more than one "shape" for Rank-2 functions, just like there's more than 
 
 you can have one where the argument satisfies some constraints:
 
-```
+```csharp
 interface Rank2Action<Base> {
 	void Invoke<T>(T arg) where T:struct,Base;
 }
@@ -111,7 +111,7 @@ interface Rank2Action<Base> {
 
 You can have one with a return value:
 
-```
+```csharp
 interface Rank2Func<Base,Result> {
 	Result Invoke<T>(T arg) where T:struct,Base;
 }
@@ -119,7 +119,7 @@ interface Rank2Func<Base,Result> {
 
 one with a ref parameter:
 
-```
+```csharp
 interface Rank2ByRef<Base> {
 	void Invoke<T>(ref T arg) where T:struct,Base;
 }
@@ -137,7 +137,7 @@ Again, it's a pattern. There's one for just a type, there's one for a type and a
 
 here's an example:
 
-```
+```csharp
 interface IRank2Func<Base,Arg,Result> {
 	Result Invoke<T>(T value, Arg arg) where T:struct,Base;
 }
@@ -163,7 +163,7 @@ Suppose you have a dog type:
 
 <img src="https://upload.wikimedia.org/wikipedia/commons/3/3d/Longdog.jpg" 
 	style="display:block;margin-left:auto;margin-right:auto;width: 50%;">
-```
+```csharp
 interface IDog {
 	bool IsGood { get; }
 	float Loyalty { get; }
@@ -175,7 +175,7 @@ interface IDog {
 
 And some implementations:
 
-```
+```csharp
 struct LongDog : IDog {
 	float shaggyness,length;
 
@@ -216,7 +216,7 @@ struct GoldenRetriever : IDog {
 Now, let's say you want to put these good boys in a linked list. You might try a linked list something like this:
 
 <img src="{dirname}/linked.jpg" style="display:block;margin-left:auto;margin-right:auto;width: 80%;">
-```
+```csharp
 class Node {
 	public IDog dog;
 	public Node next;
@@ -233,7 +233,7 @@ So, let's try again. this time, using an interface for the node type:
 
 
 <img src="{dirname}/structs.jpg" style="display:block;margin-left:auto;margin-right:auto;width: 80%;">
-```
+```csharp
 interface INode {
 	INode Next { get; set; }
 }
@@ -250,7 +250,7 @@ this fixes the packing problem, but now you can't access the dogs through the in
 
 This is where the Rank-2 functions come in. We'll add an `Accept` function to the list, which lets us pass a rank-2 function in and do something with the first dog. The Node fills the role of Existential type:
 
-```
+```csharp
 interface IDogFunc<Arg,Result> {
 	Result Invoke<T>(ref T dog, Arg arg) where T:struct,IDog;
 }
@@ -273,8 +273,7 @@ class Node<T> : INode where T:struct,IDog {
 
 We can now implement functions over the list. Here's a copy function:
 
-```
-
+```csharp
 INode Copy(INode list) {
 	if(list == null) {
 		return null;
@@ -299,7 +298,7 @@ class CopyNode : IDogFunc<_, INode> {
 
 or the `PetAll` function:
 
-```
+```csharp
 void PetAll(INode dogs, float vigor) {
 	for(var node = dogs; node != null; node = node.Next) {
 		node.Accept(PetDog.instance, vigor);

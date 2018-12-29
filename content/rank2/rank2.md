@@ -10,7 +10,7 @@ With every sufficiently large C# project, there's a problem I inevitably run int
 
 <img src="https://upload.wikimedia.org/wikipedia/commons/9/92/Philip_Greenspun_and_Alex_the_dog.jpg" 
      style="display:block;margin-left:auto;margin-right:auto;width: 50%;"
-     alt="Philip Greenspun's magestic dog sitting next to Philip Greenspun">
+     title="Philip Greenspun's magestic dog sitting next to Philip Greenspun">
 
 > Greenspun’s Tenth Rule: Any sufficiently complicated C or Fortran program contains an ad hoc informally-specified bug-ridden slow implementation of half of Common Lisp.
 

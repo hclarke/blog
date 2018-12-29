@@ -139,7 +139,7 @@ here's an example:
 
 ```csharp
 interface IRank2Func<Base,Arg,Result> {
-	Result Invoke<T>(T value, Arg arg) where T:struct,Base;
+	Result Invoke<T>(T val, Arg arg) where T:struct,Base;
 }
 
 interface IExistentialValue<Base> {
@@ -147,12 +147,12 @@ interface IExistentialValue<Base> {
 }
 
 struct ExistentialValue<Base,T> : IExistentialValue<Base> where T:struct,Base {
-	T value;
-	public ExistentialValue(T value) {
-		this.value = value;
+	T val;
+	public ExistentialValue(T val) {
+		this.val = val;
 	}
 	Result Accept<Arg,Result>(IRank2Func<Base,Arg,Result> func, Arg arg) {
-		return func.Invoke(value, arg);
+		return func.Invoke(val, arg);
 	}
 }
 ```

@@ -163,7 +163,8 @@ struct ExistentialValue<Base,T> : IExistentialValue<Base> where T:struct,Base {
 Suppose you have a dog type:
 
 <img src="https://upload.wikimedia.org/wikipedia/commons/3/3d/Longdog.jpg" 
-	style="display:block;margin-left:auto;margin-right:auto;width: 50%;">
+	style="display:block;margin-left:auto;margin-right:auto;width: 50%;"
+	title="A very cute long dog">
 ```csharp
 interface IDog {
 	bool IsGood { get; }
@@ -171,7 +172,6 @@ interface IDog {
 	void Pet(float vigor);
 }
 ```
-
 
 
 And some implementations:
@@ -216,7 +216,8 @@ struct GoldenRetriever : IDog {
 
 Now, let's say you want to put these good boys in a linked list. You might try a linked list something like this:
 
-<img src="{dirname}/linked.jpg" style="display:block;margin-left:auto;margin-right:auto;width: 80%;">
+<img src="{dirname}/linked.jpg" style="display:block;margin-left:auto;margin-right:auto;width: 80%;"
+	title="A linked list of pointers">
 ```csharp
 class Node {
 	public IDog dog;
@@ -233,7 +234,8 @@ It'd be more efficient if the data was held in the node, and only `Next` was a p
 So, let's try again. this time, using an interface for the node type:
 
 
-<img src="{dirname}/structs.jpg" style="display:block;margin-left:auto;margin-right:auto;width: 80%;">
+<img src="{dirname}/structs.jpg" style="display:block;margin-left:auto;margin-right:auto;width: 80%;"
+	title="A linked list with embedded elements">
 ```csharp
 interface INode {
 	INode Next { get; set; }

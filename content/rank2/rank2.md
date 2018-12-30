@@ -1,10 +1,10 @@
 Title: Rank 2 Greenspunning
-Date: 2018-12-26 20:00 
+Date: 2018-12-20 17:00 
 Tags: blag 
 Category: blag 
 Slug: rank2 
 Summary: hacking rank 2 types into C#
-Status: draft
+Status: published
 
 With every sufficiently large C# project, there's a problem I inevitably run into: I want to call a generic function, but I've thrown out the type by casting to a base class/interface.
 
@@ -20,9 +20,9 @@ If you know the [visitor pattern](https://en.wikipedia.org/wiki/Visitor_pattern)
 
 # What's a Rank 2 Function?
 
-note: I'll be using `delegate` and `function` more or less interchangeably. C#'s way of doing [first-class functions]() is with delegates (a method pointer + a target object, wrapped up in a `Delegate` object). you can get a delegate by casting a Method to a delegate type, or with a lambda expression, or a few other more cumbersome ways.
+note: I'll be using `delegate` and `function` more or less interchangeably. C#'s way of doing first-class functions is with delegates (a method pointer + a target object, wrapped up in a `Delegate` object). you can get a delegate by casting a Method to a delegate type, or with a lambda expression, or a few other more cumbersome ways.
 
-First, it helps to know what Rank 0 and 1 types are. They more or less correspond to types, and generic types, respectively
+First, it helps to know what Rank 0 and 1 types are. They more or less correspond to types, and generic types, respectively.
 
 ## rank-0 types 
 
@@ -70,7 +70,7 @@ Rank-2 types have type variables in the body that don't appear in the angle brac
 
 The only C# types that are like this are classes/structs with generic methods: the generic method's type parameter belongs to the method, not to the class.
 
-with some imaginary syntax, perhaps a C# Rank2 delegate would look like this, signifying that the `Arg` type parameter doesn't belong to the delegate, it belongs inside of it:
+with some imaginary syntax, perhaps a C# Rank2 delegate would look like this, signifying that the `T` type parameter doesn't belong to the delegate, it belongs inside of it:
 
 ```csharp
 delegate void Rank2Function(<T>T arg);

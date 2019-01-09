@@ -4,20 +4,11 @@ Tags: blag
 Category: blag
 Slug: plurals
 Summary: what if programming languages understood plurals?
-Status:draft
+Status: published
 
 *[note: this is a bad idea]*
 
-In haskell, there's a convention for a list of things to have a plural name.
-
-for example, haskell's `map` function uses `x` for a single element of a list, and `xs` for a list:
-
-```haskell
-map f [] = []
-map f (x:xs) = f x : map f xs
-```
-
-What if a language understood plurals for the purposes of `foreach` loops?
+What if a programming language understood plurals for the purposes of `foreach` loops?
 
 Here's some normal python code:
 

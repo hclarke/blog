@@ -35,7 +35,7 @@ foreach item:
   DoStuff(item)
 ```
 
-The idea is that `item` would get pluralized to `items`, so there's no need to specify the collection that's being looped through. The compiler could figure it out from the singular!
+The idea is that `item` would get pluralized to `items`, so there's no need to specify the collection that's being looped through. The lnguage could figure it out from the singular!
 
 Here's another example, with nested loops:
 

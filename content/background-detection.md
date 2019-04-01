@@ -1,17 +1,17 @@
 Title: background detection
-Date: 2019-04-1 15:00
+Date: 2019-04-1 16:20
 Tags: blag
 Category: blag
 Slug: background-detection
 Summary: some js to detect when a window is in the background
-Status: draft
+Status: published
 
-I was on Twitter (mistake, I know), and some people were concerned that chrome added a feature to detect when the window becomes hidden/visible. This tweet was retweeted on my feed:
+I was on Twitter (mistake, I know), and some people were concerned that chrome added a feature to detect when the window becomes hidden/visible. This was retweeted on my feed:
 
 <blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Today’s topic:<br><br>  Web pages can now detect when Chrome’s window is covered by another window<a href="https://t.co/F7crhNHmcU">https://t.co/F7crhNHmcU</a> <a href="https://t.co/ZLVNm13oNO">pic.twitter.com/ZLVNm13oNO</a></p>&mdash; Web Platform News (@WebPlatformNews) <a href="https://twitter.com/WebPlatformNews/status/1111304922514030593?ref_src=twsrc%5Etfw">March 28, 2019</a></blockquote>
 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
-People were saying that you should stop using chrome because of this! (not going to quote them)
+People were saying that you should stop using chrome because of this!
 
 I'm not sure what the concern is?
 

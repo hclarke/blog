@@ -6,13 +6,18 @@ Slug: background-detection
 Summary: some js to detect when a window is in the background
 Status: draft
 
-I was on Twitter (mistake, I know), and some people were concerned that chrome added a feature to detect when the window becomes hidden/visible. Presumably so that a video or something could pause when you switch tabs/windows.
+I was on Twitter (mistake, I know), and some people were concerned that chrome added a feature to detect when the window becomes hidden/visible
 
-People were saying that you should stop using chrome because of this!
+<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Today’s topic:<br><br>  Web pages can now detect when Chrome’s window is covered by another window<a href="https://t.co/F7crhNHmcU">https://t.co/F7crhNHmcU</a> <a href="https://t.co/ZLVNm13oNO">pic.twitter.com/ZLVNm13oNO</a></p>&mdash; Web Platform News (@WebPlatformNews) <a href="https://twitter.com/WebPlatformNews/status/1111304922514030593?ref_src=twsrc%5Etfw">March 28, 2019</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+People were saying that you should stop using chrome because of this! (not going to quote them)
 
 I'm not sure what the exact concern is. But, you can do this in all of the other browsers, too
 (I tested chrome, firefox, safari. Didn't test edge, ie, or opera, but suspect it works there, too)
 
+
+# The Code
 Here's some code (explained below):
 
 ```js

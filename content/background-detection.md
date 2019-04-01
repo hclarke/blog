@@ -6,19 +6,22 @@ Slug: background-detection
 Summary: some js to detect when a window is in the background
 Status: draft
 
-I was on Twitter (mistake, I know), and some people were concerned that chrome added a feature to detect when the window becomes hidden/visible
+I was on Twitter (mistake, I know), and some people were concerned that chrome added a feature to detect when the window becomes hidden/visible. This tweet was retweeted on my feed:
 
 <blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Today’s topic:<br><br>  Web pages can now detect when Chrome’s window is covered by another window<a href="https://t.co/F7crhNHmcU">https://t.co/F7crhNHmcU</a> <a href="https://t.co/ZLVNm13oNO">pic.twitter.com/ZLVNm13oNO</a></p>&mdash; Web Platform News (@WebPlatformNews) <a href="https://twitter.com/WebPlatformNews/status/1111304922514030593?ref_src=twsrc%5Etfw">March 28, 2019</a></blockquote>
 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 People were saying that you should stop using chrome because of this! (not going to quote them)
 
-I'm not sure what the exact concern is. But, you can do this in all of the other browsers, too
-(I tested chrome, firefox, safari. Didn't test edge, ie, or opera, but suspect it works there, too)
+I'm not sure what the concern is?
+- an ad could pause when they were trying to avoid it
+- Google doing anything = evil
+- 👀they just don't like being watched 👀
+
+But, you can do this in all of the other browsers, too. So, I guess we should all quit the internet now (maybe not the worst idea)
 
 
 # The Code
-Here's some code (explained below):
 
 ```js
 var lastTime = null
@@ -44,6 +47,8 @@ function start(time) {
 
 requestAnimationFrame(start);
 ```
+
+# How it Works
 
 The basic idea is that when you have another tab selected, or another window is blocking it, the `requestAnimationFrame` event stops firing (or happens much less frequently).
 

@@ -19,7 +19,7 @@ I'm not sure what the concern is?
 - Google doing anything = evil
 - 👀they just don't like being watched 👀
 
-But, you can do this in all of the other browsers, too. So, I guess we should all quit the internet now (maybe not the worst idea)
+But, I wrote some code to do this in all of the other browsers, too. I guess we should all quit the internet now (maybe not the worst idea)
 
 
 # The Code

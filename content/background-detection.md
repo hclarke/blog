@@ -14,6 +14,7 @@ I was on Twitter (mistake, I know), and some people were concerned that chrome a
 People were saying that you should stop using chrome because of this! (not going to quote them)
 
 I'm not sure what the concern is?
+
 - an ad could pause when they were trying to avoid it
 - Google doing anything = evil
 - 👀they just don't like being watched 👀

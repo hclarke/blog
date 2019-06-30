@@ -1,0 +1,226 @@
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	color: inherit;
+	text-decoration: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+/* start */
+
+body {
+	--bgcol: #fed314;
+	max-width: 38rem;
+	padding: 2rem;
+	margin: auto;
+	background-color:#f9f9f9;
+	color:black;
+	font-family: 'Lato', sans-serif;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+a[href] {
+	text-decoration: underline;
+}
+
+
+nav {
+	text-align: center;
+	font-size: 1.5em;
+	font-weight: bolder;
+}
+nav ul {
+	display: inline-flex;
+}
+nav li + :before {
+	content: '||';
+}
+
+a img[src^="theme/"] {
+	width: 1em;
+	height: 1em;
+	vertical-align: bottom;
+}
+
+address {
+	display: flex;
+	flex-direction: column;
+	position: absolute;
+	bottom: 0.8125em;
+	left: 0.8125em;
+}
+
+body > footer {
+	position: relative;
+}
+
+body > header {
+	background-image: linear-gradient(to bottom, var(--bgcol), transparent);
+	border-top-left-radius: 0.5em;
+	border-top-right-radius: 0.5em;
+}
+
+body > footer {
+	min-height: 5rem;
+	background-image: linear-gradient(to top, var(--bgcol), transparent);
+	border-bottom-left-radius: 0.5em;
+	border-bottom-right-radius: 0.5em;
+}
+
+.paginator {
+	font-size: 2em;
+	font-weight: bolder;
+	display: grid;
+	grid-template-columns: 50% 50%;
+}
+
+.paginator .prev {
+	grid-column-start: 1;
+	justify-self: start;
+}
+.paginator .next {
+	grid-column-start: 2;
+	justify-self: end;
+}
+body > header h1 {
+	text-align: right;
+}
+
+em {
+	font-style: italic;
+}
+em::before, em::after {
+	content: '*';
+	color: rgba(0,0,0,0.8);
+	display: inline-block;
+	text-align: left;
+}
+h1, h2, h3, h4, h3, h6 {
+	font-family: 'B612 Mono', monospace;
+	font-weight: bolder;
+	position:relative;
+	display: inline-block;
+	font-size: var(--height);
+	margin-top: 1em;
+	overflow: hidden;
+}
+h1 {
+	width: 100%;
+}
+h1, h2 {
+	padding-bottom: calc(var(--height)*0.5);
+}
+
+h1::after, h2::after {
+	content: var(--tags);
+	position: absolute;
+	left:0;
+	right:0;
+	top: calc(100% - 1em);
+	color: rgba(0,0,0,0.5);
+	display: inline-block;
+	overflow: hidden;
+	word-wrap: break-word;
+}
+
+
+h3::before, h4::before, h5::before, h6::before{
+	content: var(--tags);
+	color: rgba(0,0,0,0.5);
+	display: inline-block;
+	vertical-align: middle;
+}
+
+h1 {
+	--height: 2em;
+	--tags: '================================================================';
+}
+h2 {
+	--height: 1.5em;
+	--tags: '----------------------------------------------------------------';
+}
+h3 {
+	--height: 1.25em;
+	--tags: '###';
+}
+h4 {
+	--height: 1.125em;
+	--tags: '####';
+}
+
+pre {
+	font-family: 'Inconsolata', monospace;
+	margin-top: 1em;
+	margin-bottom: 1em;
+	padding-top: calc(0.8125em*2 + 0.375em + 1em);
+	padding-bottom: 1.8125em;
+	padding-left: 0.8125em;
+	padding-right: 0.8125em;
+	border-radius: 0.375em;
+	position: relative;
+	background-color: rgba(0,0,0,.15);
+	white-space: pre-wrap;
+	background-image: 
+		radial-gradient(circle at calc(0.8125em + 0.375em) calc(0.8125em + 0.375em), #fc605c 0.375em, transparent 0),
+		radial-gradient(circle at calc(0.8125em + 0.375em*3 + 0.5em) calc(0.8125em + 0.375em), #fdbc40 0.375em, transparent 0),
+		radial-gradient(circle at calc(0.8125em + 0.375em*5 + 1em) calc(0.8125em + 0.375em), #34c749 0.375em, transparent 0);
+}
+pre::before, pre::after {
+	content: '```';
+	position: absolute;
+	left: 0.8125em;
+	display: inline-block;
+}
+pre::before {
+	top: calc(0.8125em*2 + 0.375em);
+}
+pre::after {
+	bottom: 0.8125em;
+}

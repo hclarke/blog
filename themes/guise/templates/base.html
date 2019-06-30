@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="{{ DEFAULT_LANG }}">
+<head>
+
+    {% block head %}
+    <meta charset="UTF-8">
+	<link rel="stylesheet" type="text/css" href="/theme/guise.css">
+	<link href="https://fonts.googleapis.com/css?family=B612+Mono:400,700|Lato|Inconsolata:400,700" rel="stylesheet">
+    <title>{% block title %}{{ SITENAME }}{% endblock title %}</title>
+    {% endblock head %}
+
+</head>
+
+<body>
+    <header>
+        <h1><a href="{{ SITEURL }}/">{{ SITENAME }}</a></h1>
+
+        <nav>
+            <ul>
+            {% for cat, null in categories %}
+                <li><a{% if cat == category %} class="selected"{% endif %} href="{{ SITEURL }}/{{ cat.url }}">{{ cat }}</a></li>
+            {% endfor %}
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+	{% block content %}
+    {% endblock content %}
+	</main>
+
+	<footer>
+	{% block footer %}
+	{% endblock footer %}
+    <address>
+    <a href="https://twitter.com/hay_guise"><img src="theme/twitter.svg">hay_guise</a>
+    <a href="https://github.com/hclarke"><img src="theme/github.svg">hclarke</a>
+    </address>
+	</footer>
+	
+</body>
+
+</html>

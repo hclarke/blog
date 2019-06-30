@@ -6,7 +6,7 @@ AUTHOR = u'harrison'
 SITENAME = u'hclarke'
 SITEURL = 'http://hclarke.ca'
 
-THEME = u'themes/pure'
+THEME = u'themes/guise'
 
 TIMEZONE = 'Europe/Paris'
 

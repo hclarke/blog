@@ -5,4 +5,4 @@ Category: blag
 Slug: first-post
 Summary: first post
 
-this post is the first post. welcome to my blag.
+this post is the *first post*. welcome to my blag.

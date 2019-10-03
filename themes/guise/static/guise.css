@@ -142,6 +142,15 @@ em::before, em::after {
 	display: inline-block;
 	text-align: left;
 }
+
+b {
+	font-style: bold;
+}
+b::before, b::after {
+	content: '**';
+	display: inline-block;
+	text-align: left;
+}
 h1, h2, h3, h4, h3, h6 {
 	font-family: 'B612 Mono', monospace;
 	font-weight: bolder;
@@ -195,6 +204,13 @@ h4 {
 	--tags: '####';
 }
 
+code {
+	font-family: 'Inconsolata', monospace;
+	color: rgba(0,0,0,0.8);
+}
+code::before, code::after {
+	content:'`';
+}
 pre {
 	font-family: 'Inconsolata', monospace;
 	margin-top: 1em;
@@ -223,4 +239,12 @@ pre::before {
 }
 pre::after {
 	bottom: 0.8125em;
+}
+
+.higlight .kd {
+	color: #a626a4
+}
+
+.highlight .kc {
+	color: rgb(160, 116, 196);
 }

@@ -90,7 +90,8 @@ img:hover {
 
 body {
 	max-width: 38rem;
-	padding: 2rem;
+	padding-left: 2rem;
+	padding-right: 2rem;
 	margin: auto;
 	background-color:var(--background-col);
 	color:var(--text-col);

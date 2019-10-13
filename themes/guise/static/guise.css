@@ -50,14 +50,50 @@ table {
 }
 
 /* start */
+:root {
+	--header-col: #fed314;
+	--background-col: #f9f9f9;
+	--text-col: black;
+	--pre-col: black;
+	--pre-bg: rgba(0,0,0,.15);
+	--code-col: rgba(0,0,0,0.8);
+	--markdown-col: rgba(0,0,0,0.6);
+
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--header-col: #7151ab;
+		--background-col: rgb(50, 54, 57);
+		--text-col: #9ed9d7;
+		--pre-col:#80feb2;
+		--pre-bg:rgba(0,0,0,.50);
+		--code-col: #efc5bc;
+		--markdown-col: #729492;
+	}
+
+	img, twitter-widget {
+		opacity: .60;
+	}
+	img:hover, twitter-widget:hover {
+		opacity: 1;
+	}
+}
+
+img {
+	border-radius: 8px;
+	transition: opacity .15s ease-in-out, border-radius .15s ease-in-out;
+}
+img:hover {
+	border-radius: 0em;
+}
 
 body {
-	--bgcol: #fed314;
 	max-width: 38rem;
 	padding: 2rem;
 	margin: auto;
-	background-color:#f9f9f9;
-	color:black;
+	background-color:var(--background-col);
+	color:var(--text-col);
 	font-family: 'Lato', sans-serif;
 }
 
@@ -102,14 +138,14 @@ body > footer {
 }
 
 body > header {
-	background-image: linear-gradient(to bottom, var(--bgcol), transparent);
+	background-image: linear-gradient(to bottom, var(--header-col), transparent);
 	border-top-left-radius: 0.5em;
 	border-top-right-radius: 0.5em;
 }
 
 body > footer {
 	min-height: 5rem;
-	background-image: linear-gradient(to top, var(--bgcol), transparent);
+	background-image: linear-gradient(to top, var(--header-col), transparent);
 	border-bottom-left-radius: 0.5em;
 	border-bottom-right-radius: 0.5em;
 }
@@ -138,16 +174,7 @@ em {
 }
 em::before, em::after {
 	content: '*';
-	color: rgba(0,0,0,0.8);
-	display: inline-block;
-	text-align: left;
-}
-
-b {
-	font-style: bold;
-}
-b::before, b::after {
-	content: '**';
+	color: var(--markdown-col);
 	display: inline-block;
 	text-align: left;
 }
@@ -173,7 +200,7 @@ h1::after, h2::after {
 	left:0;
 	right:0;
 	top: calc(100% - 1em);
-	color: rgba(0,0,0,0.5);
+	color: var(--markdown-col);
 	display: inline-block;
 	overflow: hidden;
 	word-wrap: break-word;
@@ -182,7 +209,7 @@ h1::after, h2::after {
 
 h3::before, h4::before, h5::before, h6::before{
 	content: var(--tags);
-	color: rgba(0,0,0,0.5);
+	color: var(--markdown-col);
 	display: inline-block;
 	vertical-align: middle;
 }
@@ -206,10 +233,7 @@ h4 {
 
 code {
 	font-family: 'Inconsolata', monospace;
-	color: rgba(0,0,0,0.8);
-}
-code::before, code::after {
-	content:'`';
+	color: var(--code-col);
 }
 pre {
 	font-family: 'Inconsolata', monospace;
@@ -221,7 +245,8 @@ pre {
 	padding-right: 0.8125em;
 	border-radius: 0.375em;
 	position: relative;
-	background-color: rgba(0,0,0,.15);
+	background-color: var(--pre-bg);
+	color: var(--pre-col);
 	white-space: pre-wrap;
 	background-image: 
 		radial-gradient(circle at calc(0.8125em + 0.375em) calc(0.8125em + 0.375em), #fc605c 0.375em, transparent 0),

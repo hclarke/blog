@@ -14,7 +14,7 @@ here, i modified his algorithm by adding walls, instead of cutting paths. it has
 
 i also made each random walk start at a random point, rather than iterating through in row-major order.
 
-<script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="https://d3js.org/d3.v3.min.js"></script>
 <script>
 
 

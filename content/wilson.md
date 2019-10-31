@@ -46,9 +46,8 @@ var cellSize = 4,
  	}
  }
  //shuffle them
- for(var i = 0; i < remaining.length-1; ++i) {
- 	var rest = remaining.length-i;
- 	var j = Math.floor(Math.random()*rest);
+ for(var i = 0; i < remaining.length; ++i) {
+ 	var j = Math.floor(Math.random()*(i+1));
  	var temp = remaining[i];
  	remaining[i] = remaining[j];
  	remaining[j] = temp;

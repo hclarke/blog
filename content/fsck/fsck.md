@@ -67,7 +67,7 @@ This is bad
 
 <div id="worse" class="p5"></div>
 
-Then I looked up the GUID partition table on wikipedia. Looks like I had the id for apple's older filesystem, and maybe I should be using the newer one
+Then I looked up the [GUID partition table](https://en.wikipedia.org/wiki/GUID_Partition_Table#Partition_type_GUIDs) on wikipedia. Looks like I had the id for apple's older filesystem, and maybe I should be using the newer one
 
 So I re-added the partition again, triple checking that I got the sizes right, and typed it in right
 

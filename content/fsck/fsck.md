@@ -15,8 +15,6 @@ A few days ago, I thought it'd be a great idea to install linux on my laptop (a 
 I'd use the fresh install to minimize distraction, and put creative software like [darktable](https://www.darktable.org/)
 and [ORCA](https://100r.co/pages/orca.html) on it, and I'd be a wizard in no time.
 
-<div id="wizard" class="p5"></div>
-
 The photos from my trip to dia:beacon have been collecting dust on my hard drive for weeks. I glanced through them, but Finder (osx)
 is too slow and irritating to preview images. The pros use Adobe Bridge, and I heard that the cool kids use darktable. I was going to get it done.
 I just needed to install an operating system, download the tools, configure it the way I like it, and get to work
@@ -30,7 +28,7 @@ I picked up a USB stick on my way home (16gb, the finest $7.99 could buy), and h
 
 Maybe this is the year of the linux desktop?
 
-<div id="arrow" class="p5"></div>
+<div id="compy" class="p5"></div>
 
 But there was a problem. The wifi wasn't working. It worked fine when running on the USB, so I know it has the drivers,
 but why not after installing?
@@ -155,11 +153,8 @@ img {
 		p.text('' + Math.floor((f%100)/10) + Math.floor(f%10), p.width/2, p.height/2);
 	})
 
-	makeSketch('wizard', function(p) {
-		
-	})
-
-	makeSketch('arrow', function(p) {
+	makeSketch('compy', function(p) {
+		p.background(0);
 		p.fill(255);
 
 		let s = p.width / 24;
@@ -212,6 +207,7 @@ img {
 	})
 
 	makeSketch('worse', function(p) {
+		p.background(0);
 		p.fill(255);
 		p.ellipse(p.width/2, p.height/2, p.width*0.75, p.width*0.75);
 
@@ -230,14 +226,24 @@ img {
 	})
 
 	makeSketch('cross', function(p) {
-		/*
-			|
-		   \|/
-		----+----
-		   /|\
-			|
-			|
-		*/
+		p.noStroke();
+		p.background(0);
+		let s = p.width / 24;
+		p.fill(255);
+		p.rect(p.width/2-s/2, 0, s, p.height);
+		p.rect(p.width*0.3, p.height * 0.25 - s/2, p.width*0.4, s);
+
+		p.push();
+		p.translate(p.width/2, p.height * 0.25);
+		p.rotate(p.PI/4);
+		for(let i = 0; i < 4; ++i) {
+			p.rotate(p.PI/2);
+			p.rect(-p.width * 0.2, -s/4, p.width*0.1, s/2);
+		}
+		p.ellipse(0,0, 20, 20);
+		p.pop();
+		p.noLoop();
+
 	})
 
 	makeSketch('fin', function(p) {

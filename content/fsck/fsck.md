@@ -73,7 +73,7 @@ So I re-added the partititon again, triple checking that I got the sizes right, 
 
 It worked!
 
-<div id="cross" class="p5"></div>
+<div id="bless" class="p5"></div>
 
 I booted up osx, resized the partition, and vowed never to install linux on my primary hard drive until I forget this lesson again
 
@@ -107,14 +107,26 @@ img {
 <script>
 (function() {
 
-	var makeSketch = function(target, draw) {
+	var makeSketch = function(target, draw, preload) {
 		var sketch = function(p) {
 			let e = document.getElementById(target);
+
+			if(preload) {
+				p.preload = function() {
+					preload(p);
+				}
+			}
+
 			p.setup = function() {
 
 				let s = getComputedStyle(e)
 				let w = parseInt(s.width)/2;
-				p.createCanvas(w,w);
+				if(preload) {
+					p.createCanvas(w,w, p.WEBGL);
+				}
+				else {
+					p.createCanvas(w,w);
+				}
 				p.background(0);
 			}
 
@@ -216,42 +228,34 @@ img {
 
 
 		for(let i = 0; i < 200; ++i) {
-			let a = Math.random() * p.PI * 0.33 + p.PI * 0.125;
-			let r = Math.random() * p.width*0.75 *0.5;
+			let rand = Math.random();
+			let a = rand * p.PI * 0.33 + p.PI * 0.125;
+			let r = Math.random() * p.width*0.75 *0.5 * Math.sin(rand * p.PI);
 			let x = p.width/2 + Math.cos(a) * r ;
 			let y = p.height/2 - Math.sin(a) * r;
 			p.line(p.width/2, p.height/2, x, y);
 		}
-		p.noLoop();
+		//p.noLoop();
 	})
 
-	makeSketch('cross', function(p) {
-		p.noStroke();
-		p.background(0);
-		let s = p.width / 24;
-		p.fill(255);
-		p.rect(p.width/2-s/2, 0, s, p.height);
-		p.rect(p.width*0.3, p.height * 0.25 - s/2, p.width*0.4, s);
+	makeSketch('bless', function(p) {
+		
+		let s = p.state.shader;
+		p.shader(s);
+		s.setUniform('time', performance.now()/1000.0);
+		p.rect(0, 0, p.width, p.height);
 
-		p.push();
-		p.translate(p.width/2, p.height * 0.25);
-		p.rotate(p.PI/4);
-		for(let i = 0; i < 4; ++i) {
-			p.rotate(p.PI/2);
-			p.rect(-p.width * 0.2, -s/4, p.width*0.1, s/2);
-		}
-		p.ellipse(0,0, 20, 20);
-		p.pop();
-		p.noLoop();
-
+	}, function(p) {
+		p.state = {}
+		p.state.shader = p.loadShader('{dirname}/quad.vert', '{dirname}/bless.frag');
 	})
 
 	makeSketch('fin', function(p) {
 		p.background(0);
 		p.fill(255);
-		p.ellipse(p.width*3/4, p.height*3/4, p.width/4, p.width/4);
+		p.ellipse(p.width/2, p.height/2, p.width/4, p.width/4);
 		p.fill(0);
-		p.ellipse(p.width*3/4, p.height*3/4, p.width/4.5, p.width/4.5);
+		p.ellipse(p.width/2, p.height/2, p.width/4.5, p.width/4.5);
 		p.noLoop();
 
 	})

@@ -1,10 +1,10 @@
 Title: fsck
-Date: 2019-11-27 11:11
+Date: 2019-11-11 11:11
 Tags: blag
 Category: blag
 Slug: fsck
 Summary: I ruined it
-Status: draft
+Status: published
 
 
 My friend keeps a sheet of paper with two columns: lessons, and # of times learned

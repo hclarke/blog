@@ -38,7 +38,7 @@ def replace_paths(instance):
     siteurl = instance._context['localsiteurl']
     dirpath = instance.relative_dir
     dirpath = dirpath.replace('\\', '/')
-    dirpath = siteurl+"/"+dirpath
+    dirpath = "/"+dirpath
     instance._content = re.sub(r'{dirname}', dirpath, instance._content)
 
 def register():

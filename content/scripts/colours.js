@@ -139,7 +139,6 @@ function HCLToLUV(c) {
 function CHCLToHCL(c) {
     var mc = MaxChroma([c[0], c[2]]);
     var nc = Math.min(mc, c[1]);
-    console.log("" + mc + ", " + c[1] + ", " + nc)
     return [c[0], Math.min(c[1], mc), c[2]];
 }
 

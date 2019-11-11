@@ -23,18 +23,18 @@ The photos were going to be magnificent
 
 <img src="{dirname}/steel.jpg">
 
-I was getting more productive already: I was thinking about all these things while downloading elementary os and upgrading etcher.
+I was getting more productive already: I was thinking about all these things while downloading elementary OS and upgrading etcher.
 I picked up a USB stick on my way home (16gb, the finest $7.99 could buy), and had it installed that evening
 
 Maybe this is the year of the linux desktop?
 
 <div id="compy" class="p5"></div>
 
-But there was a problem. The wifi wasn't working. It worked fine when running on the USB, so I know it has the drivers,
+But there was a problem; The wifi wasn't working. It worked fine when running on the USB, so I know it has the drivers,
 but why not after installing?
 
 The next two days were filled with stackoverflow answers, `dpkg-scanpackages`, 
-and booting up osx to look at a webpage before diving back in.
+and booting up osx to look at the internet before diving back in.
 
 I realized I was shaving a yak, booted up osx, deleted the linux partition, and formatted the USB stick so I wouldn't be tempted again.
 Maybe next year
@@ -47,7 +47,7 @@ I couldn't resize my osx partition to use the whole drive. After fussing with it
 
 My heart stopped when it booted up grub. I tried again, and osx wasn't a boot option anymore!
 
-I did an osx network boot, and my partition looked in-tact, but the boot laoder couldn't find it. it's right there, dummy!
+I did an osx network boot, and my partition looked in-tact, but the boot loader couldn't find it. it's right there, dummy!
 
 But then I noticed the partition's type was `FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF`, which is never a number I want to see.
 I don't know what that means, but it's definitely wrong.
@@ -69,7 +69,7 @@ This is bad
 
 Then I looked up the GUID partition table on wikipedia. Looks like I had the id for apple's older filesystem, and maybe I should be using the newer one
 
-So I re-added the partititon again, triple checking that I got the sizes right, and typed it in right
+So I re-added the partition again, triple checking that I got the sizes right, and typed it in right
 
 It worked!
 
@@ -77,7 +77,7 @@ It worked!
 
 I booted up osx, resized the partition, and vowed never to install linux on my primary hard drive until I forget this lesson again
 
-Another lesson: tools matter, but not that much. michael jordan in crocs could still dunk on me
+Another lesson: tools matter, but not that much. Michael Jordan in crocs could still dunk on me
 
 <div id="fin" class="p5"></div>
 

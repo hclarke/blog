@@ -92,7 +92,7 @@ Another lesson: tools matter, but not that much. Michael Jordan in crocs could s
 	border-radius: 1rem;
 }
 
-img {
+main img {
 	width: 50%;
 	height: auto;
 	margin-left: auto;

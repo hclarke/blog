@@ -145,6 +145,7 @@ body > header {
 }
 
 body > footer {
+	line-height: 1;
 	min-height: 5rem;
 	background-image: linear-gradient(to top, var(--header-col), transparent);
 	border-bottom-left-radius: 0.5em;

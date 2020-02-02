@@ -35,4 +35,4 @@ RELATIVE_URLS = True
 
 PLUGINS = ['inlineimages', 'render_math', 'hashtag']
 
-STATIC_PATHS = ['scripts']
+STATIC_PATHS = ['scripts','events']

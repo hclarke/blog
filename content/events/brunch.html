@@ -1,0 +1,242 @@
+<!doctype html>
+
+<html>
+
+<head>
+	<title>🍳☕🥖</title>
+</head>
+
+<body>
+<style>
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	color: inherit;
+	text-decoration: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1.2720196;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+/* start */
+:root {
+	--header-col: #fed314;
+	--background-col: #f9f9f9;
+	--text-col: black;
+	--pre-col: black;
+	--pre-bg: rgba(0,0,0,.15);
+	--code-col: rgba(0,0,0,0.8);
+	--markdown-col: rgba(0,0,0,0.6);
+
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--header-col: #7151ab;
+		--background-col: rgb(50, 54, 57);
+		--text-col: #9ed9d7;
+		--pre-col:#80feb2;
+		--pre-bg:rgba(0,0,0,.50);
+		--code-col: #efc5bc;
+		--markdown-col: #729492;
+	}
+
+	img, twitter-widget {
+		opacity: .60;
+	}
+	img:hover, twitter-widget:hover {
+		opacity: 1;
+	}
+}
+
+body {
+	max-width: 38rem;
+	padding-left: 2rem;
+	padding-right: 2rem;
+	margin: auto;
+	background-color:var(--background-col);
+	color:var(--text-col);
+	font-family: 'Lato', sans-serif;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+a[href] {
+	text-decoration: underline;
+}
+
+
+
+address {
+	display: flex;
+	flex-direction: column;
+	position: absolute;
+	bottom: 0.8125em;
+	left: 0.8125em;
+}
+
+body > footer {
+	position: relative;
+}
+
+body > header {
+	background-image: linear-gradient(to bottom, var(--header-col), transparent);
+	border-top-left-radius: 0.5em;
+	border-top-right-radius: 0.5em;
+}
+
+body > footer {
+	line-height: 1;
+	min-height: 5rem;
+	background-image: linear-gradient(to top, var(--header-col), transparent);
+	border-bottom-left-radius: 0.5em;
+	border-bottom-right-radius: 0.5em;
+}
+
+.paginator {
+	font-size: 2em;
+	font-weight: bolder;
+	display: grid;
+	grid-template-columns: 50% 50%;
+}
+
+.paginator .prev {
+	grid-column-start: 1;
+	justify-self: start;
+}
+.paginator .next {
+	grid-column-start: 2;
+	justify-self: end;
+}
+body > header h1 {
+	text-align: right;
+}
+
+em {
+	font-style: italic;
+}
+em::before, em::after {
+	content: '*';
+	color: var(--markdown-col);
+	display: inline-block;
+	text-align: left;
+}
+h1, h2, h3, h4, h3, h6 {
+	font-family: 'B612 Mono', monospace;
+	font-weight: bolder;
+	position:relative;
+	display: inline-block;
+	font-size: var(--height);
+	margin-top: 1em;
+	overflow: hidden;
+}
+h1 {
+	width: 100%;
+}
+h1, h2 {
+	padding-bottom: calc(var(--height)*0.5);
+}
+
+.higlight .kd {
+	color: #a626a4
+}
+
+.highlight .kc {
+	color: rgb(160, 116, 196);
+}
+</style>
+
+<main>
+	<h1>Brunch!</h1>
+
+	<p id="target">.
+</main>
+<script>
+var target = new Date(2020, 01, 08, 11, 30, 0, 0);
+
+function showTime() {
+	var ms = (target - new Date());
+	var secMS = 1000;
+	var minMS = secMS * 60;
+	var hourMS = minMS * 60;
+	var dayMS = hourMS * 24;
+	var ele = document.getElementById("target");
+
+	if(ms < 0) {
+		if(ms > hourMS * -4) {
+			ele.textContent = "brunch in progress!";
+		}
+		else {
+			ele.textContnet = "too late. Try again next time."
+		}
+		return;
+	}
+	
+	var days = Math.floor(ms / dayMS);
+	ms -= days * dayMS;
+	
+	var hours = Math.floor(ms / hourMS);
+	ms -= hours * hourMS;
+
+	var mins = Math.floor(ms / minMS);
+	ms -= mins * minMS;
+	
+	var secs = Math.floor(ms / secMS);
+
+	ele.textContent = "";
+	ele.textContent += days + " days, ";
+	ele.textContent += hours + " hours, ";
+	ele.textContent += mins + " minutes, ";
+	ele.textContent += secs + " seconds!";
+}
+
+setInterval(showTime, 1000);
+showTime();
+
+</script>
+</body>
+</html>

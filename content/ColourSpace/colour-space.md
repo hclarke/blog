@@ -196,15 +196,18 @@ void main() {
              gl_FragColor = vec4(0,0,0,1);
         }
         else if(hcl.y > maxChroma(hcl.xz))  {
-            gl_FragColor = vec4(c,0.0);
+            gl_FragColor = vec4(1,1,1,1);
         }
         else {
             gl_FragColor = vec4(c, 1.0);
         }
         return;
     }
-
+    
     gl_FragColor = vec4(0.0,0.0,0.0,0.0);
+    if(r < 1.0) {
+        gl_FragColor = vec4(1,1,1,1)
+    }
 
 }
 </script>
